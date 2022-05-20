@@ -8,17 +8,27 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private int _maxPlayers = 5;
     [SerializeField] private Button _playButton;
+    [SerializeField] private Button _forceStartButton;
     [SerializeField] private TextMeshProUGUI _waitingText;
     [SerializeField] private string _mainSceneName;
     
-    private void Awake() => _playButton.onClick.AddListener(OnPlayButtonClicked);
-    private void OnDestroy() => _playButton.onClick.RemoveAllListeners();
+    private void Awake()
+    {
+        _playButton.onClick.AddListener(OnPlayButtonClicked);
+        _forceStartButton.onClick.AddListener(OnForceStartButtonClicked);
+    }
+
+    private void OnDestroy()
+    {
+        _playButton.onClick.RemoveAllListeners();
+        _forceStartButton.onClick.RemoveAllListeners();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         _waitingText.gameObject.SetActive(false);
-        
+        _forceStartButton.gameObject.SetActive(false);
         _playButton.interactable = false;
         
         if (!PhotonNetwork.IsConnected)
@@ -45,6 +55,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     private void OnPlayButtonClicked() => Connect();
+    
+    private void OnForceStartButtonClicked()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.LoadLevel(_mainSceneName);
+    }
 
     public void Connect()
     {
@@ -64,8 +81,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-   
+        
         _waitingText.gameObject.SetActive(true);
+        _forceStartButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

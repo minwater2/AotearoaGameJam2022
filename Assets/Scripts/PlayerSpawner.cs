@@ -1,46 +1,59 @@
-
+using System.Collections.Generic;
 using System.Linq;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerSpawner : MonoBehaviourPun
+public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
     private const string _SHEPHERD_PROPERTY = "Shepherd";
+    private const string _WOLF_PROPERTY = "Wolves";
     
     [SerializeField] private GameObject _shepherdPrefab;
     [SerializeField] private GameObject _wolfPrefab;
 
     [SerializeField] private Vector3 _shepherdSpawn;
-    [SerializeField] private Vector3[] _wolvesSpawnPoints;
+    [SerializeField] private Transform[] _wolvesSpawnPoints;
     
     // Start is called before the first frame update
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
-            RandomlySetShepherd();
-        
-        var shepherdId = (int)PhotonNetwork.CurrentRoom.CustomProperties[_SHEPHERD_PROPERTY];
-        
-        // check if shepherdId == playerID
-        if (shepherdId == PhotonNetwork.LocalPlayer.ActorNumber)
-        {
-            PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn, Quaternion.identity);
-        }
-        else
-        {
-            var randomSpawnPos = _wolvesSpawnPoints[Random.Range(0, _wolvesSpawnPoints.Length)];
-            PhotonNetwork.Instantiate(_wolfPrefab.name, randomSpawnPos, Quaternion.identity);
-        }
+            AssignRoles();
     }
 
-    private void RandomlySetShepherd()
+    private void AssignRoles()
     {
-        var shepherdId =
-            PhotonNetwork.CurrentRoom.Players.Keys.ToList()[Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount)];
+        var players = PhotonNetwork.CurrentRoom.Players.Keys.ToList();
+        
+        var shepherdId = players[Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount)];
 
-        var roomProperties = new Hashtable {[_SHEPHERD_PROPERTY] = shepherdId};
+        players.Remove(shepherdId);
+        
+        var roomProperties = new Hashtable
+        {
+            [_SHEPHERD_PROPERTY] = shepherdId,
+            [_WOLF_PROPERTY] = players.ToArray(),
+        };
         
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
+        if (propertiesThatChanged.TryGetValue(_SHEPHERD_PROPERTY, out object actorNumber))
+        {
+            if ((int)actorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+                PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn, Quaternion.identity);
+        }
+        else if (propertiesThatChanged.TryGetValue(_WOLF_PROPERTY, out object actorNumbers))
+        {
+            var wolves = ((int[]) actorNumbers).ToList();
+            if (!wolves.Contains(PhotonNetwork.LocalPlayer.ActorNumber)) return;
+            
+            var randomSpawnPos = _wolvesSpawnPoints[Random.Range(0, _wolvesSpawnPoints.Length)].position;
+            PhotonNetwork.Instantiate(_wolfPrefab.name, randomSpawnPos, Quaternion.identity);
+        }
     }
 }
