@@ -3,8 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class SheepController : MonoBehaviour
 {
-    [SerializeField] private float _speed = 10f;
-    [SerializeField] private float _viewDistance = 5f;
+    [SerializeField] private float _coherence = 10f;
+    [SerializeField] private float _separation = 50f;
+    [SerializeField] private float _viewDistance = 10f;
+    [SerializeField] private float _avoidanceDistance = 2f;
     
     private Rigidbody _rigidbody;
 
@@ -15,21 +17,36 @@ public class SheepController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var totalVisibleSheepVector = Vector3.zero;
+        // coherence
+        var coherenceSheepVector = Vector3.zero;
+        var separationSheepVector = Vector3.zero;
         foreach (var sheep in FlockHandler.Sheepsss)
         {
-            if (Vector3.Distance(sheep.position, transform.position) > _viewDistance) continue;
+            float distance = Vector3.Distance(sheep.position, transform.position);
+            if (distance > _viewDistance) continue;
             var direction = sheep.position - transform.position;
             if (Vector3.Dot(transform.forward, direction) < 0) continue;
+            
+            coherenceSheepVector += direction.normalized;
 
-            totalVisibleSheepVector += direction.normalized;
+            if (distance > _avoidanceDistance) continue;
+
+            separationSheepVector += direction.normalized;
         }
+        
+        // coherence
+        coherenceSheepVector.y = 0;
+        coherenceSheepVector = coherenceSheepVector.normalized;
 
-        var avoidSheepVector = -totalVisibleSheepVector.normalized;
-        float avoidSheepAngle = Mathf.Rad2Deg * Mathf.Atan2(avoidSheepVector.z, avoidSheepVector.x);
+        _rigidbody.AddForce(_coherence * Time.deltaTime * coherenceSheepVector);
+
+        // separation
+        separationSheepVector.y = 0;
+        separationSheepVector = -separationSheepVector.normalized;
         
-        transform.rotation = Quaternion.Euler(new Vector3(0, avoidSheepAngle, 0));
+        _rigidbody.AddForce(_separation * Time.deltaTime * separationSheepVector);
         
-        _rigidbody.velocity = _speed * transform.forward;
+        Debug.DrawRay(transform.position, coherenceSheepVector * 2, Color.red, Time.deltaTime);
+        Debug.DrawRay(transform.position, separationSheepVector, Color.magenta, Time.deltaTime);
     }
 }
