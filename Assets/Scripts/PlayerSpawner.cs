@@ -47,7 +47,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             if ((int)actorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
                 PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn, Quaternion.identity);
         }
-        else if (propertiesThatChanged.TryGetValue(_WOLF_PROPERTY, out object actorNumbers))
+        if (propertiesThatChanged.TryGetValue(_WOLF_PROPERTY, out object actorNumbers))
         {
             var wolves = ((int[]) actorNumbers).ToList();
             if (!wolves.Contains(PhotonNetwork.LocalPlayer.ActorNumber)) return;
