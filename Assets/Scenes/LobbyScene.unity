@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2a2ad161296214891e52a51a67ec81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxPlayers: 2
+  _maxPlayers: 5
   _playButton: {fileID: 1385186996}
   _forceStartButton: {fileID: 451840511}
   _waitingText: {fileID: 322699266}
