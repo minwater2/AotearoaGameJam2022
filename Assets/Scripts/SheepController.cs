@@ -3,8 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class SheepController : MonoBehaviour
 {
+    [SerializeField] private float _speed;
     [SerializeField] private float _coherence = 10f;
     [SerializeField] private float _separation = 50f;
+    [SerializeField] private float _alignment = 20f;
     [SerializeField] private float _viewDistance = 10f;
     [SerializeField] private float _avoidanceDistance = 2f;
     
@@ -20,6 +22,7 @@ public class SheepController : MonoBehaviour
         // coherence
         var coherenceSheepVector = Vector3.zero;
         var separationSheepVector = Vector3.zero;
+        var alignmentSheepVector = Vector3.zero;
         foreach (var sheep in FlockHandler.Sheepsss)
         {
             float distance = Vector3.Distance(sheep.position, transform.position);
@@ -28,7 +31,8 @@ public class SheepController : MonoBehaviour
             if (Vector3.Dot(transform.forward, direction) < 0) continue;
             
             coherenceSheepVector += direction.normalized;
-
+            alignmentSheepVector += sheep.forward;
+            
             if (distance > _avoidanceDistance) continue;
 
             separationSheepVector += direction.normalized;
@@ -38,15 +42,21 @@ public class SheepController : MonoBehaviour
         coherenceSheepVector.y = 0;
         coherenceSheepVector = coherenceSheepVector.normalized;
 
-        _rigidbody.AddForce(_coherence * Time.deltaTime * coherenceSheepVector);
-
         // separation
         separationSheepVector.y = 0;
         separationSheepVector = -separationSheepVector.normalized;
         
-        _rigidbody.AddForce(_separation * Time.deltaTime * separationSheepVector);
+        // alignment
+        alignmentSheepVector.y = 0;
+        alignmentSheepVector = alignmentSheepVector.normalized;
+        
+        // set rotation and speed
+        transform.forward = (coherenceSheepVector * _coherence + separationSheepVector * _separation +
+                             alignmentSheepVector * _alignment).normalized;
+        _rigidbody.velocity = transform.forward * _speed;
         
         Debug.DrawRay(transform.position, coherenceSheepVector * 2, Color.red, Time.deltaTime);
+        Debug.DrawRay(transform.position, separationSheepVector, Color.magenta, Time.deltaTime);
         Debug.DrawRay(transform.position, separationSheepVector, Color.magenta, Time.deltaTime);
     }
 }
