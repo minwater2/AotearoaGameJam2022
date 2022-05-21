@@ -59,17 +59,18 @@ public class WolfHandler : MonoBehaviourPun
             minDistance = distance;
             closestSheep = sheepCol.gameObject;
         }
-
-        _photonView.RPC(nameof(CmdAttack), RpcTarget.MasterClient, closestSheep);
+        
+        _photonView.RPC(nameof(CmdAttack), RpcTarget.MasterClient, PhotonView.Get(closestSheep).ViewID);
 
         StartCoroutine(StartAttackCooldown());
     }
 
     [PunRPC]
-    private void CmdAttack(GameObject closestSheep)
+    private void CmdAttack(int id)
     {
-        FlockHandler.Sheepsss.Remove(closestSheep.transform);
-        PhotonNetwork.Destroy(closestSheep);
+        var deadSheep = PhotonView.Find(id).gameObject;
+        FlockHandler.Sheepsss.Remove(deadSheep.transform);
+        PhotonNetwork.Destroy(deadSheep);
     }
     
     private IEnumerator StartAttackCooldown()

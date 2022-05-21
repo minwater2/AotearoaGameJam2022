@@ -7,6 +7,7 @@ public class FlockHandler : MonoBehaviour
     private const float _SHEEP_HEIGHT = 0.5f;
 
     public static readonly List<Transform> Sheepsss = new();
+    public static int TotalSheep;
     
     [SerializeField] private string _sheepName = "Sheep";
     [SerializeField] private Vector2Int _minMaxNumSheep;
@@ -20,9 +21,9 @@ public class FlockHandler : MonoBehaviour
     private void SpawnSheep()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        int numSheep = Random.Range(_minMaxNumSheep.x, _minMaxNumSheep.y);
+        TotalSheep = Random.Range(_minMaxNumSheep.x, _minMaxNumSheep.y);
 
-        for (int i = 0; i < numSheep; i++)
+        for (int i = 0; i < TotalSheep; i++)
         {
             int x = Random.Range(0, _mapSize) - _mapSize / 2;
             int z = Random.Range(0, _mapSize) - _mapSize / 2;
