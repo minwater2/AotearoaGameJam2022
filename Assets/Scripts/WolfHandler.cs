@@ -51,7 +51,7 @@ public class WolfHandler : MonoBehaviourPun
         var isWolf = wolves.ToList().Contains(PhotonNetwork.LocalPlayer.ActorNumber);
         
         if(isWolf)
-            _namePlate.Init(PhotonNetwork.NickName);
+            _namePlate.Init(photonView.Owner.NickName);
     }
 
     private void OnDestroy()
