@@ -12,10 +12,10 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private float _distanceToKill = 5f;
     [SerializeField] private float _attackCooldown = 5f;
     [SerializeField] private float _effectsTiming = 0.5f;
+    [SerializeField] ParticleSystem _particles;
 
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
-    private ParticleSystem _particles;
 
     private bool _isWolf;
     private bool _onCooldown;
@@ -27,7 +27,6 @@ public class WolfHandler : MonoBehaviourPun
         
         _damageHandler = GetComponent<DamageHandler>();
         _damageHandler.OnDeath += OnDeath;
-        _particles = GetComponent<ParticleSystem>();
     }
 
     private void OnDestroy()
