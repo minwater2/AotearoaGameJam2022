@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        _rigidbody.MovePosition(_rigidbody.position + _velocity * Time.deltaTime);
+        var deltaPosition = _velocity.x * transform.right + _velocity.z * transform.forward;
+        
+        _rigidbody.MovePosition(transform.position + deltaPosition * Time.deltaTime);
     }
 }

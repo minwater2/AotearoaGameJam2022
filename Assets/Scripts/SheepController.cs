@@ -58,6 +58,7 @@ public class SheepController : MonoBehaviourPun
 
     private void LateUpdate()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _groundLayer))
         {
             transform.position = hit.point + new Vector3(0, _heightOffset, 0);

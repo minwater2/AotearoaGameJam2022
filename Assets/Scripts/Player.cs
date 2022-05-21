@@ -33,15 +33,11 @@ public class Player : MonoBehaviourPun
 
     private void ProcessInput()
     {
-        var movement = new Vector3
-        {
-            x = Input.GetAxisRaw("Horizontal"),
-            y = 0f,
-            z = Input.GetAxisRaw("Vertical"),
-        }.normalized;
-
-        Vector3 moveVelocity = movement.normalized * MoveSpeed;
-        _playerController.Move(moveVelocity);
+        Vector3 velocity = new Vector3(
+            Input.GetAxisRaw("Horizontal") * MoveSpeed,
+            0,
+            Input.GetAxisRaw("Vertical") * MoveSpeed);
+        _playerController.Move(velocity);
     }
     
     private void Rotate()
