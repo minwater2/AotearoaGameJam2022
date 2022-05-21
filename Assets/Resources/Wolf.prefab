@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 8152944042920741518}
   - component: {fileID: 8152944042920741523}
   - component: {fileID: 8152944042920741516}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}

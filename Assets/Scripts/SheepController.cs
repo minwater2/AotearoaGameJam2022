@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
@@ -14,6 +13,7 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private float _separation = 50f;
     [SerializeField] private float _avoidance = 10f;
     [SerializeField] private float _alignment = 20f;
+    [SerializeField] private float _playerAvoidance = 10f;
     [SerializeField] private float _viewDistance = 10f;
     [SerializeField] private float _avoidanceDistance = 2f;
     [SerializeField] private float _grazeChance = 2f;
@@ -92,6 +92,15 @@ public class SheepController : MonoBehaviourPun
 
             separationSheepVector += direction.normalized;
         }
+
+        var playerAvoidanceVector = Vector3.zero;
+        
+        foreach (var player in FlockHandler.PlayersToAvoid)
+        {
+            float distance = Vector3.Distance(player.position, transform.position);
+            if (distance > _viewDistance) continue;
+            playerAvoidanceVector += player.position - transform.position;
+        }
         
         // coherence
         coherenceSheepVector.y = 0;
@@ -104,7 +113,11 @@ public class SheepController : MonoBehaviourPun
         // alignment
         alignmentSheepVector.y = 0;
         alignmentSheepVector = alignmentSheepVector.normalized;
-
+        
+        // player avoidance
+        playerAvoidanceVector.y = 0;
+        playerAvoidanceVector = -playerAvoidanceVector.normalized;
+        
         var obstacleAvoidanceVector = Vector3.zero;
         
         // obstacle avoidance
@@ -124,8 +137,8 @@ public class SheepController : MonoBehaviourPun
         
         // set rotation and speed
         transform.forward = (coherenceSheepVector * _coherence + separationSheepVector * _separation +
-                             alignmentSheepVector * _alignment + transform.forward * _momentum + 
-                             obstacleAvoidanceVector * _avoidance).normalized;
+                             alignmentSheepVector * _alignment + playerAvoidanceVector * _playerAvoidance +
+                             obstacleAvoidanceVector * _avoidance + transform.forward * _momentum).normalized;
         _rigidbody.velocity = transform.forward * _speed;
     }
 

@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -14,6 +15,9 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _isWolf = TryGetComponent<WolfHandler>(out _);
+
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (!_isWolf) FlockHandler.PlayersToAvoid.Add(transform);
     }
 
     public void Move(Vector3 velocity)

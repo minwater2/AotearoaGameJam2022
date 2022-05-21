@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6856338280175669757}
   - component: {fileID: 3012156911849049943}
   - component: {fileID: 5100715884358561077}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SM_Env_Cloud_02
   m_TagString: Cloud
   m_Icon: {fileID: 0}
