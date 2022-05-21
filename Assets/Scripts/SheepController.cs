@@ -43,14 +43,15 @@ public class SheepController : MonoBehaviourPun
 
     private void OnDeath()
     {
-        if (!photonView.IsMine) return;
-        FlockHandler.Sheepsss.Remove(transform);
         _meshRenderer.enabled = false;
         _collider.enabled = false;
         _rigidbody.isKinematic = true;
-        //PhotonNetwork.Destroy(gameObject);
-        WinConditions.Instance.SetSheepCount(-1);
         enabled = false;
+
+        if (!PhotonNetwork.IsMasterClient) return;
+        
+        FlockHandler.Sheepsss.Remove(transform);
+        WinConditions.Instance.SetSheepCount(-1);
     }
 
     private void FixedUpdate()
