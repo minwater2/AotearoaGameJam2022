@@ -11,6 +11,8 @@ public class WinConditions : MonoBehaviourPunCallbacks
 {
     public static WinConditions Instance { get; private set; }
 
+    private int sheeptotal;
+    
     private const string _SHEEPAMOUNT = "SheepAmount";
     private const string _WOLFKILLED = "WolfAmount";
     private const string _TIMER = "Timer";
@@ -35,13 +37,14 @@ public class WinConditions : MonoBehaviourPunCallbacks
             _roomProperties = new Hashtable
             {
                 [_SHEEPAMOUNT] = FlockHandler.Sheepsss.Count/2,
-                [_WOLFKILLED] = 2,//Get wolfs from playerspawner
+                [_WOLFKILLED] = PlayerSpawner.WolfCount,//Get wolfs from playerspawner
             };
         
             PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);    
         }
 
         endScreen = GetComponent<EndScreenUI>();
+        sheeptotal = FlockHandler.Sheepsss.Count / 2;
     }
     
     public void SetSheepCount(int change)
@@ -82,13 +85,13 @@ public class WinConditions : MonoBehaviourPunCallbacks
         if (propertiesThatChanged.TryGetValue(_SHEEPAMOUNT, out var sheep))
         {
             if ((int)sheep <= 0) endScreen.WinScreen(Team.Shepherd);
-            if ((int)sheep >= 0) SheepCountText.text = "Sheep: " + sheep + "/" + FlockHandler.Sheepsss.Count/2;
+            if ((int)sheep >= 0) SheepCountText.text = "Sheep: " + sheep + "/" + sheeptotal;
         }
 
         if (propertiesThatChanged.TryGetValue(_WOLFKILLED, out var wolf))
         {
-            if ((int) wolf <= 0) endScreen.WinScreen(Team.Wolf);
-            if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + 4;
+            if ((int)wolf <= 0) endScreen.WinScreen(Team.Wolf);
+            if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + PlayerSpawner.WolfCount;
         }
         
         if (propertiesThatChanged.TryGetValue(_TIMER, out var timer))

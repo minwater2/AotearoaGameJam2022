@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Team {Shepherd,Wolf};
 public class EndScreenUI : MonoBehaviour
@@ -17,5 +18,10 @@ public class EndScreenUI : MonoBehaviour
         else _wolfWin.SetActive(true);
         
         //Show stats here
+    }
+
+    public void RematchButton()
+    {
+        SceneManager.LoadScene("MainLevel");
     }
 }
