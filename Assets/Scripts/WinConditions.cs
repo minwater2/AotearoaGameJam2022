@@ -40,11 +40,8 @@ public class WinConditions : MonoBehaviourPun
         _currentSheep = _sheepTotal;
         _currentWolves = _wolfTotal;
         
-        WolfCountText.text = "Wolf: " + _wolfTotal + "/" + _wolfTotal;
-        SheepCountText.text = "Sheep: " + _sheepTotal + "/" + _sheepTotal;
-        
-        photonView.RPC(nameof(RpcWolves), RpcTarget.All, _currentWolves);
-        photonView.RPC(nameof(RpcShepard), RpcTarget.All, _currentSheep);
+        photonView.RPC(nameof(RpcWolves), RpcTarget.All,_currentWolves, _wolfTotal);
+        photonView.RPC(nameof(RpcShepard), RpcTarget.All,_currentSheep, _sheepTotal);
         photonView.RPC(nameof(RpcTime), RpcTarget.All, timeLeft);
     }
 
@@ -90,9 +87,9 @@ public class WinConditions : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void RpcWolves(int count)
+    private void RpcWolves(int count, int total)
     {
-        WolfCountText.text = "Wolf: " + count + "/" + _wolfTotal;
+        WolfCountText.text = "Wolf: " + count + "/" + total;
         if (count <= 0)
         {
             endScreen.WinScreen(Team.Shepherd);
@@ -100,9 +97,9 @@ public class WinConditions : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void RpcShepard(int count)
+    private void RpcShepard(int count, int total)
     {
-        SheepCountText.text = "Sheep: " + count + "/" + _sheepTotal;
+        SheepCountText.text = "Sheep: " + count + "/" + total;
         if (count <= 0)
         {
             endScreen.WinScreen(Team.Wolf);
