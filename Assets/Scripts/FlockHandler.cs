@@ -13,7 +13,7 @@ public class FlockHandler : MonoBehaviour
     [SerializeField] private Vector2Int _minMaxNumSheep;
     [SerializeField] private int _mapSize;
 
-    private void Start()
+    private void Awake()
     {
         SpawnSheep();
     }

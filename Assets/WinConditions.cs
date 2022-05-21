@@ -14,10 +14,6 @@ public class WinConditions : MonoBehaviourPunCallbacks
     private const string _SHEEPAMOUNT = "SheepAmount";
     private const string _WOLFKILLED = "WolfAmount";
     private const string _TIMER = "Timer";
-    
-    public int SheepAmountStart = 50;
-    public int WolfsKilled;
-    public float Timer;
 
     private Hashtable _roomProperties;
 
@@ -25,7 +21,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
     public TMP_Text WolfCountText;
 
     private EndScreenUI endScreen;
-    private void Awake()
+    private void Start()
     {
         if (Instance == null)
         {
@@ -38,7 +34,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
         {
             _roomProperties = new Hashtable
             {
-                [_SHEEPAMOUNT] = SheepAmountStart,
+                [_SHEEPAMOUNT] = FlockHandler.Sheepsss.Count/2,
                 [_WOLFKILLED] = 2,//Get wolfs from playerspawner
             };
         
@@ -47,7 +43,6 @@ public class WinConditions : MonoBehaviourPunCallbacks
 
         endScreen = GetComponent<EndScreenUI>();
     }
-
     
     public void SetSheepCount(int change)
     {
@@ -87,7 +82,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
         if (propertiesThatChanged.TryGetValue(_SHEEPAMOUNT, out var sheep))
         {
             if ((int)sheep <= 0) endScreen.WinScreen(Team.Shepherd);
-            if ((int)sheep >= 0) SheepCountText.text = "Sheep: " + sheep + "/" + SheepAmountStart;
+            if ((int)sheep >= 0) SheepCountText.text = "Sheep: " + sheep + "/" + FlockHandler.Sheepsss.Count/2;
         }
 
         if (propertiesThatChanged.TryGetValue(_WOLFKILLED, out var wolf))
