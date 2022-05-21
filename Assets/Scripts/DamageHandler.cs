@@ -14,17 +14,19 @@ public class DamageHandler : MonoBehaviourPun
 
     public void ProcessDamage()
     {
-        _photonView.RPC(nameof(CmdHandleDeath), RpcTarget.MasterClient, _photonView.ViewID);
+        //_photonView.RPC(nameof(CmdHandleDeath), RpcTarget.MasterClient, _photonView.ViewID);
+        _photonView.RPC(nameof(CmdHandleDeath), RpcTarget.All);
     }
     
     
     [PunRPC]
     private void CmdHandleDeath(int viewId)
     {
-        if (viewId == _photonView.ViewID)
-        {
-            OnDeath?.Invoke();
-        }
+        OnDeath?.Invoke();
+        // if (viewId == _photonView.ViewID)
+        // {
+        //     OnDeath?.Invoke();
+        // }
     }
     
     //

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(DamageHandler))]
-public class SheepController : MonoBehaviour
+public class SheepController : MonoBehaviourPun
 {
     [SerializeField] private float _speed = 20f;
     [SerializeField] private float _momentum = 20f;
@@ -39,6 +39,7 @@ public class SheepController : MonoBehaviour
 
     private void OnDeath()
     {
+        if (!photonView.IsMine) return;
         FlockHandler.Sheepsss.Remove(transform);
         PhotonNetwork.Destroy(gameObject);
         WinConditions.Instance.SetSheepCount(-1);
