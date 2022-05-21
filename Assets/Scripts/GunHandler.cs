@@ -1,14 +1,20 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 
-public class GunHandler : MonoBehaviour
+public class GunHandler : MonoBehaviourPun
 {
     [SerializeField] private Shotgun _shotgun;
+    
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (photonView.IsMine)
         {
-            _shotgun.Shoot();
+            if (Input.GetMouseButtonDown(0))
+            {
+                _shotgun.Shoot();
+            }
         }
+     
     }
 }
