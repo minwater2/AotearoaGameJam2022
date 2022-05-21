@@ -47,6 +47,9 @@ public class WolfHandler : MonoBehaviourPun
 
     private void Start()
     {
+        if (!PhotonNetwork.IsConnected) return;
+        if (PhotonNetwork.CurrentRoom == null) return;
+
         var wolves = (int[]) PhotonNetwork.CurrentRoom.CustomProperties[_WOLF_PROPERTY];
         var isWolf = wolves.ToList().Contains(PhotonNetwork.LocalPlayer.ActorNumber);
         
