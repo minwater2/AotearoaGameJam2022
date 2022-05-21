@@ -11,12 +11,14 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private LayerMask _sheepLayer;
     [SerializeField] private float _distanceToKill = 5f;
     [SerializeField] private float _attackCooldown = 5f;
+    [SerializeField] private ParticleSystem _particles;
 
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
     
     private bool _isWolf;
     private bool _onCooldown;
+    private bool _isDead;
 
     private void Awake()
     {
@@ -33,7 +35,7 @@ public class WolfHandler : MonoBehaviourPun
 
     private void OnDeath()
     {
-        PhotonNetwork.Destroy(gameObject);
+        _photonView.RPC(nameof(CmdHandleDeath), RpcTarget.All, photonView.ViewID);
         WinConditions.Instance.SetWolfKill();
     }
 
@@ -47,6 +49,7 @@ public class WolfHandler : MonoBehaviourPun
     
     private void ShapeShift()
     {
+        if (_isDead) return;
         _isWolf = !_isWolf;
         _photonView.RPC(nameof(RpcShapeShift), RpcTarget.All, _isWolf);
     }
@@ -54,12 +57,14 @@ public class WolfHandler : MonoBehaviourPun
     [PunRPC]
     private void RpcShapeShift(bool isWolf)
     {
+        _particles.Play();
         _wolfModel.SetActive(isWolf);
         _sheepModel.SetActive(!isWolf);
     }
 
     private void Attack()
     {
+        if (_isDead) return;
         if (!_isWolf) return;
         if (_onCooldown) return;
         
@@ -90,12 +95,14 @@ public class WolfHandler : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void CmdAttack(int id)
+    private void CmdHandleDeath(int viewId)
     {
-        var deadSheep = PhotonView.Find(id).gameObject;
-        FlockHandler.Sheepsss.Remove(deadSheep.transform);
-        PhotonNetwork.Destroy(deadSheep);
-        WinConditions.Instance.SetSheepCount(-1);
+        if (viewId == photonView.ViewID)
+        {
+            _wolfModel.SetActive(false);
+            _sheepModel.SetActive(false);
+            _isDead = true;
+        }
     }
     
     private IEnumerator StartAttackCooldown()
