@@ -71,6 +71,7 @@ public class WolfHandler : MonoBehaviourPun
         var deadSheep = PhotonView.Find(id).gameObject;
         FlockHandler.Sheepsss.Remove(deadSheep.transform);
         PhotonNetwork.Destroy(deadSheep);
+        WinConditions.Instance.SetSheepCount(-1);
     }
     
     private IEnumerator StartAttackCooldown()
