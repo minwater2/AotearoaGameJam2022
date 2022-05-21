@@ -1,25 +1,19 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 
-public class WinConditions : MonoBehaviourPunCallbacks
+public class WinConditions : MonoBehaviourPun
 {
     public static WinConditions Instance { get; private set; }
     
-    private int sheeptotal = 0;
-    private int wolfTotal = 0;
+    private int _sheepTotal;
+    private int _wolfTotal;
+
+    private int _currentSheep;
+    private int _currentWolves;
     
-    private const string _SHEEPAMOUNT = "SheepAmount";
-    private const string _WOLFKILLED = "WolfAmount";
-    private const string _TIMER = "Timer";
-
-    private Hashtable _roomProperties;
-
     public TMP_Text SheepCountText;
     public TMP_Text WolfCountText;
     public TMP_Text TimerText;
@@ -28,45 +22,31 @@ public class WinConditions : MonoBehaviourPunCallbacks
 
     private float timeLeft = 60*5;
     
-    private void Start()
+    private IEnumerator Start()
     {
         if (Instance == null)
         {
             Instance = this;
         }
         else Destroy(gameObject);
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            _roomProperties = new Hashtable
-            {
-                [_SHEEPAMOUNT] = GetSheepDifficulty(PlayerSpawner.WolfCount),
-                [_WOLFKILLED] = PlayerSpawner.WolfCount,//Get wolfs from playerspawner
-                [_TIMER] = timeLeft,
-            };
         
-            PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);
-        }
         endScreen = GetComponent<EndScreenUI>();
+
+        yield return new WaitForEndOfFrame(); //wait for sheep to spawn
+
+        if (!PhotonNetwork.IsMasterClient) yield break;
+        _sheepTotal = GetSheepCountForPlayers(PlayerSpawner.WolfCount);
+        _wolfTotal = PlayerSpawner.WolfCount;
+        _currentSheep = _sheepTotal;
+        _currentWolves = _wolfTotal;
     }
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (timeLeft > 0)
-            {
-                timeLeft -= Time.deltaTime;
-                UpdateTimer(timeLeft);
-                _roomProperties[_TIMER] = timeLeft;
-                PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);
-            }
-            else
-            {
-                endScreen.WinScreen(Team.Shepherd);
-                timeLeft = 0;
-            }
-        }
+        if (!PhotonNetwork.IsMasterClient) return;
+        
+        if (timeLeft > 0) timeLeft -= Time.deltaTime;
+        photonView.RPC(nameof(RpcTime), RpcTarget.All, timeLeft);
     }
 
     private void UpdateTimer(float currentTime)
@@ -78,7 +58,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
         TimerText.text = string.Format("{0:00} :{1:00}", min, sec);
     }
     
-    public int GetSheepDifficulty(int PlayerCount)
+    public int GetSheepCountForPlayers(int PlayerCount)
     { 
         return PlayerCount switch
         {
@@ -92,53 +72,39 @@ public class WinConditions : MonoBehaviourPunCallbacks
     
     public void SetSheepCount(int change)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            int newCount = (int)_roomProperties[_SHEEPAMOUNT];
-            newCount += change;
-            _roomProperties[_SHEEPAMOUNT] = newCount;
-            PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);
-        }
+        if (!PhotonNetwork.IsMasterClient) return;
+        _currentSheep += change;
+        photonView.RPC(nameof(RpcWolves), RpcTarget.All, _currentSheep);
     }
     
     public void SetWolfKill()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            int newCount = (int)_roomProperties[_WOLFKILLED];
-            newCount--;
-            _roomProperties[_WOLFKILLED] = newCount;
-            PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);
-        }
+        if (!PhotonNetwork.IsMasterClient) return;
+        _currentWolves--;
+        photonView.RPC(nameof(RpcShepard), RpcTarget.All, _currentWolves);
     }
-    
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+
+    [PunRPC]
+    private void RpcWolves(int count)
     {
-        base.OnRoomPropertiesUpdate(propertiesThatChanged);
+        WolfCountText.text = "Wolf: " + count + "/" + _wolfTotal;
+        if (count > 0) return;
+        endScreen.WinScreen(Team.Wolf);
+    }
 
-        if (propertiesThatChanged.TryGetValue(_SHEEPAMOUNT, out var sheep))
-        {
-            if (sheeptotal == 0) sheeptotal = (int)sheep; 
-            if ((int)sheep <= 0) endScreen.WinScreen(Team.Shepherd);
-            if ((int)sheep >= 0) SheepCountText.text = "Sheep: " + sheep + "/" + sheeptotal;
-        }
+    [PunRPC]
+    private void RpcShepard(int count)
+    {
+        SheepCountText.text = "Sheep: " + count + "/" + _sheepTotal;
+        if (count > 0) return;
+        endScreen.WinScreen(Team.Shepherd);
+    }
 
-        if (propertiesThatChanged.TryGetValue(_WOLFKILLED, out var wolf))
-        {
-            if (wolfTotal == 0) wolfTotal = (int)wolf; 
-            if ((int)wolf <= 0) endScreen.WinScreen(Team.Wolf);
-            if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + wolfTotal;
-        }
-        
-        if (propertiesThatChanged.TryGetValue(_TIMER, out var timer))
-        {
-            UpdateTimer((float) timer);
-
-            if ((float)timer <= 0)
-            {
-                endScreen.WinScreen(Team.Shepherd);
-            }
-            //Debug.LogError(timer);
-        }
+    [PunRPC]
+    private void RpcTime(float time)
+    {
+        UpdateTimer(time);
+        if (time > 0) return;
+        endScreen.WinScreen(Team.Shepherd);
     }
 }
