@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum Team {Shepherd,Wolf};
-public class EndScreenUI : MonoBehaviour
+public class EndScreenUI : MonoBehaviourPun
 {
     [SerializeField] private GameObject _endGameUI;
     [SerializeField] private GameObject _shepherdWin;
@@ -22,6 +23,10 @@ public class EndScreenUI : MonoBehaviour
 
     public void RematchButton()
     {
-        SceneManager.LoadScene("MainLevel");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("MainLevel");    
+        }
+        //SceneManager.LoadScene("MainLevel");
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5303258090075884227}
   - component: {fileID: 5303258090075884226}
   - component: {fileID: 495906363}
+  - component: {fileID: 1481864367}
   m_Layer: 0
   m_Name: WinConditions
   m_TagString: Untagged
@@ -45,9 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6558707a81c6af44be75e17a8ccce2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SheepAmountStart: 50
-  WolfsKilled: 0
-  Timer: 0
   SheepCountText: {fileID: 0}
   WolfCountText: {fileID: 0}
 --- !u!114 &495906363
@@ -72,3 +70,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1481864367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5303258090075884225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63542b4bb0ba0c54ba3e89ab8f5ac6b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _endGameUI: {fileID: 0}
+  _shepherdWin: {fileID: 0}
+  _wolfWin: {fileID: 0}
