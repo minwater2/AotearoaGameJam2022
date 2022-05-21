@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1353120110045318385}
   - component: {fileID: 7445530017289962694}
   - component: {fileID: 4216619588534184214}
-  - component: {fileID: 4607677622312936403}
+  - component: {fileID: 7140393510040474028}
   m_Layer: 0
   m_Name: Shepherd
   m_TagString: Untagged
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0270c4f0ab2b4e1e8bd0a39555217501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4607677622312936403
+--- !u!114 &7140393510040474028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,9 +129,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1353120110045318386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6c2322439e42b0a84f719c3e06770c, type: 3}
+  m_Script: {fileID: 11500000, guid: 44e1c9a23e2545379de655e9817118c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shotgun: {fileID: 7420655734921657266}
 --- !u!1 &1353120110112030613
 GameObject:
   m_ObjectHideFlags: 0
