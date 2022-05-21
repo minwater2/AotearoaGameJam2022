@@ -21,6 +21,8 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private LayerMask _obstacleLayer;
     
     private Rigidbody _rigidbody;
+    private Collider _collider;
+    private MeshRenderer _meshRenderer;
     private DamageHandler _damageHandler;
     
     private bool _grazing;
@@ -29,6 +31,8 @@ public class SheepController : MonoBehaviourPun
     {
         _rigidbody = GetComponent<Rigidbody>();
         _damageHandler = GetComponent<DamageHandler>();
+        _collider = GetComponent<Collider>();
+        _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _damageHandler.OnDeath += OnDeath;
     }
 
@@ -41,8 +45,12 @@ public class SheepController : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
         FlockHandler.Sheepsss.Remove(transform);
-        PhotonNetwork.Destroy(gameObject);
+        _meshRenderer.enabled = false;
+        _collider.enabled = false;
+        _rigidbody.isKinematic = true;
+        //PhotonNetwork.Destroy(gameObject);
         WinConditions.Instance.SetSheepCount(-1);
+        enabled = false;
     }
 
     private void FixedUpdate()
