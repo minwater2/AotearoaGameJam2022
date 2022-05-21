@@ -241,7 +241,7 @@ MonoBehaviour:
   _playButton: {fileID: 1385186996}
   _forceStartButton: {fileID: 451840511}
   _waitingText: {fileID: 322699266}
-  _mainSceneName: LobbyGameTestScene
+  _mainSceneName: MainLevel
 --- !u!1 &322699265
 GameObject:
   m_ObjectHideFlags: 0
