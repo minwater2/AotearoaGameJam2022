@@ -14,7 +14,8 @@ public class Shotgun : MonoBehaviour
 
     [SerializeField] private float _maxBulletTravelDistance;
     [SerializeField] private LayerMask _interactionLayer;
-    
+
+    public bool CanShoot => _canShoot;
     private bool _canShoot = true;
     
     public void Shoot()

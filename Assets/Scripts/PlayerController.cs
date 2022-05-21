@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _velocity;
 
     private bool _isWolf;
+    public bool DisableMovement;
     
     private void Start()
     {
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (DisableMovement) return;
+        
         Vector3 deltaPosition;
         if (_isWolf) deltaPosition = _velocity.z * transform.forward;
         else deltaPosition = _velocity;
