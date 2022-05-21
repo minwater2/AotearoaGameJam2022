@@ -55,7 +55,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shepherdPrefab: {fileID: 1353120110045318386, guid: 8658208f0f2f1cf4b89f2a9c9edf4a1f, type: 3}
   _wolfPrefab: {fileID: 8152944042563386171, guid: 4e2716c85bf45c846b7095994e760a45, type: 3}
-  _shepherdSpawn: {x: 0, y: 1, z: 0}
+  _cameraPrefab: {fileID: 8211674627253461942, guid: dea99bccce9d1c0408cfdcd99e5b01cb, type: 3}
+  _shepherdSpawn: {fileID: 0}
   _wolvesSpawnPoints:
   - {fileID: 3636434916749770170}
   - {fileID: 3636434917617524526}
