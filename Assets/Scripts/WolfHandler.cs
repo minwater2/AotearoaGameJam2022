@@ -35,7 +35,7 @@ public class WolfHandler : MonoBehaviourPun
 
     private void OnDeath()
     {
-        _photonView.RPC(nameof(CmdHandleDeath), RpcTarget.All, photonView.ViewID);
+        _photonView.RPC(nameof(CmdHandleWolfDeath), RpcTarget.All, photonView.ViewID);
         WinConditions.Instance.SetWolfKill();
     }
 
@@ -95,7 +95,7 @@ public class WolfHandler : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void CmdHandleDeath(int viewId)
+    private void CmdHandleWolfDeath(int viewId)
     {
         if (viewId == photonView.ViewID)
         {

@@ -21,10 +21,10 @@ public class DamageHandler : MonoBehaviourPun
     [PunRPC]
     private void CmdHandleDeath(int viewId)
     {
-        /*if (viewId == _photonView.ViewID)
+        if (viewId == _photonView.ViewID)
         {
             OnDeath?.Invoke();
-        }*/
+        }
     }
     
     //
