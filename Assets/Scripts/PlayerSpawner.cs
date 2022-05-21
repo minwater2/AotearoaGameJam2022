@@ -46,10 +46,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
         if (propertiesThatChanged.TryGetValue(_SHEPHERD_PROPERTY, out object actorNumber))
         {
-
-            if ((int)actorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-                PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn.position, Quaternion.identity);
-
             if ((int) actorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 var playerGo = PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn.position, Quaternion.identity);
