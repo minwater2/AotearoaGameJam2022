@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FlockHandler : MonoBehaviour
 {
-    private const int _SHEEP_HEIGHT = 1;
+    private const float _SHEEP_HEIGHT = 0.5f;
 
     public static readonly List<Transform> Sheepsss = new();
     
@@ -25,7 +25,7 @@ public class FlockHandler : MonoBehaviour
             var sheep = Instantiate(_sheep, transform);
             int x = Random.Range(0, _mapSize) - _mapSize / 2;
             int z = Random.Range(0, _mapSize) - _mapSize / 2;
-            sheep.transform.position = new Vector3(x, _SHEEP_HEIGHT, z);
+            sheep.transform.position = new Vector3(x + transform.position.x, _SHEEP_HEIGHT, z + transform.position.z);
 
             float yRotation = Random.Range(0, 360);
             var rotation = Quaternion.Euler(new Vector3(0, yRotation, 0));
