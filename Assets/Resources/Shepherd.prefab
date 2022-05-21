@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0270c4f0ab2b4e1e8bd0a39555217501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DisableMovement: 0
 --- !u!114 &7140393510040474028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,11 +281,11 @@ MonoBehaviour:
   _bulletTrail: {fileID: 2208916518871876981, guid: b14ee485fd0ad2347a1b7cdab4e39d35, type: 3}
   _bulletTrailTravelTime: 0.2
   _muzzle: {fileID: 2195047935912717792}
-  _shotCooldown: 1
+  _shotCooldown: 1.25
   _magSize: 5
-  _bulletSpread: 5
+  _bulletSpread: 15
   _numberOfBullets: 5
-  _maxBulletTravelDistance: 50
+  _maxBulletTravelDistance: 12.5
   _interactionLayer:
     serializedVersion: 2
     m_Bits: 1793
