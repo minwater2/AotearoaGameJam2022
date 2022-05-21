@@ -35,14 +35,13 @@ MonoBehaviour:
   StartInOfflineMode: 0
   RpcList:
   - ClickRpc
+  - CmdHandleDeath
+  - CmdHandleWolfDeath
   - DestroyRpc
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
   - RpcShapeShift
-  - CmdAttack
-  - CmdHandleDeath
-  - CmdHandleWolfDeath
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
