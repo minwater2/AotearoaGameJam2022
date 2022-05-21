@@ -14,10 +14,12 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     
     [SerializeField] private GameObject _shepherdPrefab;
     [SerializeField] private GameObject _wolfPrefab;
-    [SerializeField] private CinemachineVirtualCamera _cameraPrefab;
 
     [SerializeField] private Transform _shepherdSpawn;
     [SerializeField] private Transform[] _wolvesSpawnPoints;
+    [SerializeField] private CinemachineVirtualCamera _cameraPrefab;
+    [SerializeField] private Vector3 _shepherdCamFollowOffset = new Vector3(0f, 10f, -5f);
+    [SerializeField] private Vector3 _wolfCamFollowOffset = new Vector3(0f, 20f, -10f);
     
     public static int WolfCount = 0;
     
@@ -58,6 +60,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 var vCam = Instantiate(_cameraPrefab);
                 vCam.m_Follow = playerGo.transform;
                 vCam.m_LookAt = playerGo.transform;
+                vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = _shepherdCamFollowOffset;
             }
 
         }
@@ -75,6 +78,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             var vCam = Instantiate(_cameraPrefab);
             vCam.m_Follow = playerGo.transform;
             vCam.m_LookAt = playerGo.transform;
+            vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = _wolfCamFollowOffset;
         }
     }
 }
