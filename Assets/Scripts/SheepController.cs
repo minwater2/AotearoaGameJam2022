@@ -19,6 +19,7 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private float _grazeChance = 2f;
     [SerializeField] private float _grazeTime = 2f;
     [SerializeField] private LayerMask _obstacleLayer;
+    [SerializeField] private LayerMask _ground;
     
     private Rigidbody _rigidbody;
     private Collider _collider;
@@ -117,6 +118,9 @@ public class SheepController : MonoBehaviourPun
                              alignmentSheepVector * _alignment + transform.forward * _momentum + 
                              obstacleAvoidanceVector * _avoidance).normalized;
         _rigidbody.velocity = transform.forward * _speed;
+
+        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5f, _ground);
+        transform.position = hit.point;
     }
 
     private IEnumerator Grazing()
