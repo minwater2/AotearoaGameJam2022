@@ -42,6 +42,10 @@ public class WinConditions : MonoBehaviourPun
         
         WolfCountText.text = "Wolf: " + _wolfTotal + "/" + _wolfTotal;
         SheepCountText.text = "Sheep: " + _sheepTotal + "/" + _sheepTotal;
+        
+        photonView.RPC(nameof(RpcWolves), RpcTarget.All, _currentWolves);
+        photonView.RPC(nameof(RpcShepard), RpcTarget.All, _currentSheep);
+        photonView.RPC(nameof(RpcTime), RpcTarget.All, timeLeft);
     }
 
     private void Update()

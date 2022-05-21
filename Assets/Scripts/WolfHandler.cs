@@ -64,6 +64,7 @@ public class WolfHandler : MonoBehaviourPun
 
     private void OnDeath()
     {
+        if (_isDead) return;
         _wolfModel.SetActive(false);
         _sheepModel.SetActive(false);
         _isDead = true;
