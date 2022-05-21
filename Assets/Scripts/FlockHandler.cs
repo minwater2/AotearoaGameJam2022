@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FlockHandler : MonoBehaviour
 {
-    private const float _SHEEP_HEIGHT = 1f;
+    private const float _SHEEP_HEIGHT = 10f;
 
     public static readonly List<Transform> Sheepsss = new();
-    public static int TotalSheep;
+    private static int _totalSheep;
     
     [SerializeField] private string _sheepName = "Sheep";
     [SerializeField] private Vector2Int _minMaxNumSheep;
@@ -21,9 +21,9 @@ public class FlockHandler : MonoBehaviour
     private void SpawnSheep()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        TotalSheep = Random.Range(_minMaxNumSheep.x, _minMaxNumSheep.y);
+        _totalSheep = Random.Range(_minMaxNumSheep.x, _minMaxNumSheep.y);
 
-        for (int i = 0; i < TotalSheep; i++)
+        for (int i = 0; i < _totalSheep; i++)
         {
             int x = Random.Range(0, _mapSize) - _mapSize / 2;
             int z = Random.Range(0, _mapSize) - _mapSize / 2;
