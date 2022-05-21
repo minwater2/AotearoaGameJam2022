@@ -225,6 +225,7 @@ MonoBehaviour:
     m_Bits: 256
   _distanceToKill: 5
   _attackCooldown: 5
+  _particles: {fileID: 7488557123433478636}
 --- !u!136 &4265097286054778523
 CapsuleCollider:
   m_ObjectHideFlags: 0
