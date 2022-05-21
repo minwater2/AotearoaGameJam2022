@@ -2210,6 +2210,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4052579491036438, guid: 142be5bea34510348b7b7dd4817a0167, type: 3}
   m_PrefabInstance: {fileID: 324648423}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &340174258 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2363297831293441887, guid: abe63184fd4ba414f9667f91520603f2, type: 3}
+  m_PrefabInstance: {fileID: 718440632}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &345918015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4356,14 +4367,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363297832030277239, guid: abe63184fd4ba414f9667f91520603f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2792565615975022217, guid: abe63184fd4ba414f9667f91520603f2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4866057274522237179, guid: abe63184fd4ba414f9667f91520603f2, type: 3}
-      propertyPath: m_CullTransparentMesh
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7070,7 +7073,7 @@ PrefabInstance:
     - target: {fileID: 1481864367, guid: 212f573359c2d4f4ebca6ef68c089642, type: 3}
       propertyPath: _wolfWin
       value: 
-      objectReference: {fileID: 718440635}
+      objectReference: {fileID: 718440636}
     - target: {fileID: 1481864367, guid: 212f573359c2d4f4ebca6ef68c089642, type: 3}
       propertyPath: _endGameUI
       value: 
@@ -7078,11 +7081,15 @@ PrefabInstance:
     - target: {fileID: 1481864367, guid: 212f573359c2d4f4ebca6ef68c089642, type: 3}
       propertyPath: _shepherdWin
       value: 
-      objectReference: {fileID: 718440636}
+      objectReference: {fileID: 718440635}
     - target: {fileID: 5303258090075884225, guid: 212f573359c2d4f4ebca6ef68c089642, type: 3}
       propertyPath: m_Name
       value: WinConditions
       objectReference: {fileID: 0}
+    - target: {fileID: 5303258090075884226, guid: 212f573359c2d4f4ebca6ef68c089642, type: 3}
+      propertyPath: TimerText
+      value: 
+      objectReference: {fileID: 340174258}
     - target: {fileID: 5303258090075884226, guid: 212f573359c2d4f4ebca6ef68c089642, type: 3}
       propertyPath: WolfCountText
       value: 

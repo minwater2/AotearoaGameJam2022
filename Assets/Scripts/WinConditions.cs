@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using Photon.Pun;
-using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
-using Unity.VisualScripting;
 
 public class WinConditions : MonoBehaviourPunCallbacks
 {
@@ -18,16 +16,18 @@ public class WinConditions : MonoBehaviourPunCallbacks
     
     private const string _SHEEPAMOUNT = "SheepAmount";
     private const string _WOLFKILLED = "WolfAmount";
-    private const string _WOLFTOTAL = "WolfTotal";
-    private const string _SHEEPTOTAL = "SheepTotal";
     private const string _TIMER = "Timer";
 
     private Hashtable _roomProperties;
 
     public TMP_Text SheepCountText;
     public TMP_Text WolfCountText;
-
+    public TMP_Text TimerText;
+    
     private EndScreenUI endScreen;
+
+    private float timeLeft = 60*5;
+    
     private void Start()
     {
         if (Instance == null)
@@ -38,16 +38,44 @@ public class WinConditions : MonoBehaviourPunCallbacks
         
         if (PhotonNetwork.IsMasterClient)
         {
-            
             _roomProperties = new Hashtable
             {
                 [_SHEEPAMOUNT] = GetSheepDifficulty(PlayerSpawner.WolfCount),
                 [_WOLFKILLED] = PlayerSpawner.WolfCount,//Get wolfs from playerspawner
+                [_TIMER] = timeLeft,
             };
         
-            PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);    
+            PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);
         }
         endScreen = GetComponent<EndScreenUI>();
+    }
+
+    private void Update()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (timeLeft > 0)
+            {
+                timeLeft -= Time.deltaTime;
+                UpdateTimer(timeLeft);
+                _roomProperties[_TIMER] = timeLeft;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);
+            }
+            else
+            {
+                endScreen.WinScreen(Team.Shepherd);
+                timeLeft = 0;
+            }
+        }
+    }
+
+    private void UpdateTimer(float currentTime)
+    {
+        currentTime += 1;
+        float min = Mathf.FloorToInt(currentTime/60);
+        float sec = Mathf.FloorToInt(currentTime%60);
+
+        TimerText.text = string.Format("{0:00} :{1:00}", min, sec);
     }
     
     public int GetSheepDifficulty(int PlayerCount)
@@ -104,6 +132,12 @@ public class WinConditions : MonoBehaviourPunCallbacks
         
         if (propertiesThatChanged.TryGetValue(_TIMER, out var timer))
         {
+            UpdateTimer((float) timer);
+
+            if ((float)timer <= 0)
+            {
+                endScreen.WinScreen(Team.Shepherd);
+            }
             //Debug.LogError(timer);
         }
     }

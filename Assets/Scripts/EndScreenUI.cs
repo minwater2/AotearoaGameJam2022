@@ -15,8 +15,8 @@ public class EndScreenUI : MonoBehaviourPun
     public void WinScreen(Team winner)
     {
         _endGameUI.SetActive(true);
-        if (winner == Team.Shepherd)_shepherdWin.SetActive(true);
-        else _wolfWin.SetActive(true);
+        if (winner == Team.Shepherd) _shepherdWin.SetActive(true);
+        if (winner == Team.Wolf) _wolfWin.SetActive(true);
         
         //Show stats here
     }
