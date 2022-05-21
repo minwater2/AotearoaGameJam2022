@@ -70,6 +70,7 @@ public class WolfHandler : MonoBehaviourPun
     {
         FlockHandler.Sheepsss.Remove(closestSheep.transform);
         PhotonNetwork.Destroy(closestSheep);
+        WinConditions.Instance.SetSheepCount(-1);
     }
     
     private IEnumerator StartAttackCooldown()

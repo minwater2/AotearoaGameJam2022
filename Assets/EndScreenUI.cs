@@ -6,7 +6,6 @@ using UnityEngine;
 public enum Team {Shepherd,Wolf};
 public class EndScreenUI : MonoBehaviour
 {
-    private Team winningteam;
     [SerializeField] private GameObject _endGameUI;
     [SerializeField] private GameObject _shepherdWin;
     [SerializeField] private GameObject _wolfWin;

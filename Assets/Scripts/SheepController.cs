@@ -23,6 +23,7 @@ public class SheepController : MonoBehaviour
     
     private void Awake()
     {
+        
         _rigidbody = GetComponent<Rigidbody>();
     }
 
