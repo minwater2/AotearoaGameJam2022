@@ -40,8 +40,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _cancelPlayButton.gameObject.SetActive(false);
         _playButton.interactable = false;
 
-        if(PlayerPrefs.HasKey(_PLAYER_NAME))
+        if (PlayerPrefs.HasKey(_PLAYER_NAME))
+        {
             PhotonNetwork.NickName = PlayerPrefs.GetString(_PLAYER_NAME, "Wolf");
+            _nameField.text = PhotonNetwork.NickName;
+        }
 
         if (!PhotonNetwork.IsConnected)
         {
