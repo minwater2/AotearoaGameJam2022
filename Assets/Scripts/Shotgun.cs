@@ -25,7 +25,7 @@ public class Shotgun : MonoBehaviour, IActionPerformer
 
         for (int i = 0; i < _numberOfBullets; i++)
         {
-            var direction = Quaternion.Euler(0, Random.Range(-_bulletSpread, _bulletSpread), 0f)
+            var direction = Quaternion.Euler(Random.Range(-_bulletSpread, _bulletSpread), Random.Range(-_bulletSpread, _bulletSpread), 0f)
                             * _muzzle.forward;
 
             if (Physics.Raycast(_muzzle.position, direction, out RaycastHit info, 100f, _interactionLayer))
