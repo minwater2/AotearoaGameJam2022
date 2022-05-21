@@ -77,13 +77,13 @@ public class WinConditions : MonoBehaviourPun
     public void SetSheepCount(int change)
     {
         _currentSheep += change;
-        photonView.RPC(nameof(RpcShepard), RpcTarget.All, _currentSheep);
+        photonView.RPC(nameof(RpcShepard), RpcTarget.All, _currentSheep, _sheepTotal);
     }
     
     public void SetWolfKill()
     {
         _currentWolves--;
-        photonView.RPC(nameof(RpcWolves), RpcTarget.All, _currentWolves);
+        photonView.RPC(nameof(RpcWolves), RpcTarget.All, _currentWolves, _wolfTotal);
     }
 
     [PunRPC]
