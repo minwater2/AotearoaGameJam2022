@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 1993178404125495286}
   - component: {fileID: 6558709716449631645}
   - component: {fileID: 5552790733023124590}
+  - component: {fileID: 4265097286054778523}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -197,7 +198,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8152944042563386175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +255,20 @@ MonoBehaviour:
     m_Bits: 256
   _distanceToKill: 5
   _attackCooldown: 5
+--- !u!136 &4265097286054778523
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152944042563386171}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &8152944042920741519
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,14 +280,13 @@ GameObject:
   - component: {fileID: 8152944042920741518}
   - component: {fileID: 8152944042920741523}
   - component: {fileID: 8152944042920741516}
-  - component: {fileID: 8152944042920741517}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8152944042920741518
 Transform:
   m_ObjectHideFlags: 0
@@ -338,17 +352,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8152944042920741517
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8152944042920741519}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
