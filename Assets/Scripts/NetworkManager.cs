@@ -132,4 +132,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        base.OnMasterClientSwitched(newMasterClient);
+        _forceStartButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+    }
 }
