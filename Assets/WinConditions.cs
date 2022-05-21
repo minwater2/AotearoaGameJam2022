@@ -75,7 +75,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown("space"))
         {
-            SetSheepCount(-10);
+            //SetSheepCount(-10);
             //SetWolfKill();
         }
     }
