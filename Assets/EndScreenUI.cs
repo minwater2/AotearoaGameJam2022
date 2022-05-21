@@ -27,6 +27,5 @@ public class EndScreenUI : MonoBehaviourPun
         {
             PhotonNetwork.LoadLevel("MainLevel");    
         }
-        //SceneManager.LoadScene("MainLevel");
     }
 }
