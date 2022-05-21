@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 public class Shotgun : MonoBehaviour
@@ -34,11 +35,12 @@ public class Shotgun : MonoBehaviour
             else
             {
                 // show bullet trace
-                var bulletTrail = Instantiate(_bulletTrail, _muzzle.position, Quaternion.identity);
-                bulletTrail.time = _bulletTrailTravelTime;
-
+                var bulletTrail = PhotonNetwork.Instantiate(_bulletTrail.name, _muzzle.position, Quaternion.identity);
+                var trail = bulletTrail.GetComponent<TrailRenderer>();
+                trail.time = _bulletTrailTravelTime;
+                
                 var pos = _muzzle.position + direction * _maxBulletTravelDistance;
-                StartCoroutine(ProcessBulletTrail(bulletTrail, pos));
+                StartCoroutine(ProcessBulletTrail(trail, pos));
             }
             
             
@@ -48,13 +50,12 @@ public class Shotgun : MonoBehaviour
     private void ProcessBulletHit(RaycastHit info)
     {
         // show bullet trace
-        var bulletTrail = Instantiate(_bulletTrail, _muzzle.position, Quaternion.identity);
-        bulletTrail.time = _bulletTrailTravelTime;
+        var bulletTrail = PhotonNetwork.Instantiate(_bulletTrail.name, _muzzle.position, Quaternion.identity);
+        var trail = bulletTrail.GetComponent<TrailRenderer>();
+        trail.time = _bulletTrailTravelTime;
         
-        StartCoroutine(ProcessBulletTrail(bulletTrail, info.point));
-        
-        //Debug.DrawLine(_muzzle.position, info.point, Color.red, 5f);
-        
+        StartCoroutine(ProcessBulletTrail(trail, info.point));
+
         if (info.collider.TryGetComponent<DamageHandler>(out var damageHandler))
         {
             damageHandler.ProcessDamage();
