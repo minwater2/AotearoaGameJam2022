@@ -90,6 +90,8 @@ public class WolfHandler : MonoBehaviourPun
         
         _player.MoveSpeed = _isWolf ? _wolfSpeed : _sheepSpeed;
 
+        StopCoroutine(WolfTimeout());
+        
         if (_isWolf)
         {
             StartCoroutine(WolfTimeout());
@@ -97,7 +99,6 @@ public class WolfHandler : MonoBehaviourPun
         }
         else
         {
-            StopCoroutine(WolfTimeout());
             StartCoroutine(ShiftCooldown());
             FlockHandler.PlayersToAvoid.Remove(transform);
         }
