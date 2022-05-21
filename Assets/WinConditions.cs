@@ -33,7 +33,6 @@ public class WinConditions : MonoBehaviourPunCallbacks
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
         
