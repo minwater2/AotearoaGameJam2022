@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384a3fcdf29493d43b7fb9b6fed007c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvas: {fileID: 905726218575125931}
   _icon: {fileID: 1629379852}
   _title: {fileID: 4045883538107096292}
   _timer: {fileID: 6970711638432128744}

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunHandler : MonoBehaviourPun
 {
     [SerializeField] private Shotgun _shotgun;
+    [SerializeField] private Animator _animator;
 
     private PlayerController _controller;
 
@@ -17,15 +18,14 @@ public class GunHandler : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            if (_shotgun.CanShoot && _controller.DisableMovement)
-                _controller.DisableMovement = false;
-            
             if (Input.GetMouseButtonDown(0))
             {
-                _controller.DisableMovement = true;
-                _shotgun.Shoot();
+                if (_shotgun.CanShoot)
+                {
+                    _controller.DisableMovement = true;
+                    _animator.SetTrigger("Shoot");
+                }
             }
         }
-     
     }
 }
