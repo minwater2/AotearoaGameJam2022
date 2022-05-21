@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class WolfHandler : MonoBehaviourPun
     
     private bool _isWolf;
     private bool _onCooldown;
+    private bool _isDead;
 
     private void Awake()
     {
@@ -33,7 +35,7 @@ public class WolfHandler : MonoBehaviourPun
 
     private void OnDeath()
     {
-        PhotonNetwork.Destroy(gameObject);
+        _photonView.RPC(nameof(CmdHandleDeath), RpcTarget.All, photonView.ViewID);
         WinConditions.Instance.SetWolfKill();
     }
 
@@ -47,6 +49,7 @@ public class WolfHandler : MonoBehaviourPun
     
     private void ShapeShift()
     {
+        if (_isDead) return;
         _isWolf = !_isWolf;
         _photonView.RPC(nameof(RpcShapeShift), RpcTarget.All, _isWolf);
     }
@@ -61,6 +64,7 @@ public class WolfHandler : MonoBehaviourPun
 
     private void Attack()
     {
+        if (_isDead) return;
         if (!_isWolf) return;
         if (_onCooldown) return;
         
@@ -90,6 +94,17 @@ public class WolfHandler : MonoBehaviourPun
             damageHandler.ProcessDamage();
     }
 
+    [PunRPC]
+    private void CmdHandleDeath(int viewId)
+    {
+        if (viewId == photonView.ViewID)
+        {
+            _wolfModel.SetActive(false);
+            _sheepModel.SetActive(false);
+            _isDead = true;
+        }
+    }
+    
     private IEnumerator StartAttackCooldown()
     {
         _onCooldown = true;
