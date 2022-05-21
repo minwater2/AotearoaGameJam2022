@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
+using System.Linq;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(DamageHandler))]
 public class WolfHandler : MonoBehaviourPun
 {
+    private const string _WOLF_PROPERTY = "Wolves";
+    
     [SerializeField] private GameObject _wolfModel;
     [SerializeField] private GameObject _sheepModel;
     [SerializeField] private LayerMask _sheepLayer;
@@ -17,6 +21,7 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private float _shiftCooldown = 5f;
     [SerializeField] GameObject _particles;
     [SerializeField] private float _wolfSpeed = 10f;
+    [SerializeField] private NamePlate _namePlate;
     
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
@@ -38,6 +43,15 @@ public class WolfHandler : MonoBehaviourPun
         _rigidbody = GetComponent<Rigidbody>();
         _sheepSpeed = _player.MoveSpeed;
         _damageHandler.OnDeath += OnDeath;
+    }
+
+    private void Start()
+    {
+        var wolves = (int[]) PhotonNetwork.CurrentRoom.CustomProperties[_WOLF_PROPERTY];
+        var isWolf = wolves.ToList().Contains(PhotonNetwork.LocalPlayer.ActorNumber);
+        
+        if(isWolf)
+            _namePlate.Init(PhotonNetwork.NickName);
     }
 
     private void OnDestroy()
