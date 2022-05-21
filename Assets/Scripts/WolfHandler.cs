@@ -94,11 +94,13 @@ public class WolfHandler : MonoBehaviourPun
         
         if (_isWolf)
         {
+            UITimer.Instance.StartWolfTimeout(_wolfTimeout);
             StartCoroutine(WolfTimeout());
             FlockHandler.PlayersToAvoid.Add(transform);
         }
         else
         {
+            UITimer.Instance.StartTransitionCooldown(_shiftCooldown);
             StartCoroutine(ShiftCooldown());
             FlockHandler.PlayersToAvoid.Remove(transform);
         }
