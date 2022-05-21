@@ -10,11 +10,14 @@ using TMPro;
 public class WinConditions : MonoBehaviourPunCallbacks
 {
     public static WinConditions Instance { get; private set; }
-
-    private int sheeptotal;
+    
+    private int sheeptotal = 0;
+    private int wolfTotal = 0;
     
     private const string _SHEEPAMOUNT = "SheepAmount";
     private const string _WOLFKILLED = "WolfAmount";
+    private const string _WOLFTOTAL = "WolfTotal";
+    private const string _SHEEPTOTAL = "SheepTotal";
     private const string _TIMER = "Timer";
 
     private Hashtable _roomProperties;
@@ -42,9 +45,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
         
             PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);    
         }
-
         endScreen = GetComponent<EndScreenUI>();
-        sheeptotal = FlockHandler.Sheepsss.Count / 2;
     }
     
     public void SetSheepCount(int change)
@@ -68,30 +69,23 @@ public class WinConditions : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);
         }
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown("space"))
-        {
-            //SetSheepCount(-10);
-            //SetWolfKill();
-        }
-    }
-
+    
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
 
         if (propertiesThatChanged.TryGetValue(_SHEEPAMOUNT, out var sheep))
         {
+            if (sheeptotal == 0) sheeptotal = (int)sheep; 
             if ((int)sheep <= 0) endScreen.WinScreen(Team.Shepherd);
             if ((int)sheep >= 0) SheepCountText.text = "Sheep: " + sheep + "/" + sheeptotal;
         }
 
         if (propertiesThatChanged.TryGetValue(_WOLFKILLED, out var wolf))
         {
+            if (wolfTotal == 0) wolfTotal = (int)wolf; 
             if ((int)wolf <= 0) endScreen.WinScreen(Team.Wolf);
-            if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + PlayerSpawner.WolfCount;
+            if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + wolfTotal;
         }
         
         if (propertiesThatChanged.TryGetValue(_TIMER, out var timer))
