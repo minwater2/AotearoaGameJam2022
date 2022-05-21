@@ -35,7 +35,6 @@ public class EndScreenUI : MonoBehaviourPun
     private void CmdRematch()
     {
         FlockHandler.Sheepsss.Clear();
-        PhotonNetwork.DestroyAll();
-        PhotonNetwork.LoadLevel("MainLevel");
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 }

@@ -38,6 +38,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _waitingText.gameObject.SetActive(false);
         _forceStartButton.gameObject.SetActive(false);
         _cancelPlayButton.gameObject.SetActive(false);
+        
         _playButton.interactable = false;
 
         if (PlayerPrefs.HasKey(_PLAYER_NAME))
@@ -50,6 +51,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.OfflineMode = false;
             PhotonNetwork.GameVersion = "0.0.1";
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        else
+        {
+            PhotonNetwork.Disconnect();
             PhotonNetwork.ConnectUsingSettings();
         }
     }
