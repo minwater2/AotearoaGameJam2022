@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 
+[RequireComponent(typeof(DamageHandler))]
 public class WolfHandler : MonoBehaviourPun
 {
     [SerializeField] private GameObject _wolfModel;
@@ -11,6 +13,7 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private float _attackCooldown = 5f;
 
     private PhotonView _photonView;
+    private DamageHandler _damageHandler;
     
     private bool _isWolf;
     private bool _onCooldown;
@@ -18,6 +21,20 @@ public class WolfHandler : MonoBehaviourPun
     private void Awake()
     {
         _photonView = PhotonView.Get(this);
+        
+        _damageHandler = GetComponent<DamageHandler>();
+        _damageHandler.OnDeath += OnDeath;
+    }
+
+    private void OnDestroy()
+    {
+        _damageHandler.OnDeath -= OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        PhotonNetwork.Destroy(gameObject);
+        WinConditions.Instance.SetWolfKill();
     }
 
     void Update()
@@ -59,10 +76,17 @@ public class WolfHandler : MonoBehaviourPun
             minDistance = distance;
             closestSheep = sheepCol.gameObject;
         }
-        
-        _photonView.RPC(nameof(CmdAttack), RpcTarget.MasterClient, PhotonView.Get(closestSheep).ViewID);
+
+        HandleSheepAttack(closestSheep);
+        //_photonView.RPC(nameof(CmdAttack), RpcTarget.MasterClient, PhotonView.Get(closestSheep).ViewID);
 
         StartCoroutine(StartAttackCooldown());
+    }
+
+    private void HandleSheepAttack(GameObject sheep)
+    {
+        if(sheep.TryGetComponent<DamageHandler>(out var damageHandler))
+            damageHandler.ProcessDamage();
     }
 
     [PunRPC]

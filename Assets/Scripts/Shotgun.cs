@@ -11,6 +11,7 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private float _bulletSpread = 5f;
     [SerializeField] private int _numberOfBullets;
 
+    [SerializeField] private float _maxBulletTravelDistance;
     [SerializeField] private LayerMask _interactionLayer;
     
     private bool _canShoot = true;
@@ -26,10 +27,21 @@ public class Shotgun : MonoBehaviour
             var direction = Quaternion.Euler(Random.Range(-_bulletSpread, _bulletSpread), Random.Range(-_bulletSpread, _bulletSpread), 0f)
                             * _muzzle.forward;
 
-            if (Physics.Raycast(_muzzle.position, direction, out RaycastHit info, 100f, _interactionLayer))
+            if (Physics.Raycast(_muzzle.position, direction, out RaycastHit info, _maxBulletTravelDistance, _interactionLayer))
             {
                 ProcessBulletHit(info);
             }
+            else
+            {
+                // show bullet trace
+                var bulletTrail = Instantiate(_bulletTrail, _muzzle.position, Quaternion.identity);
+                bulletTrail.time = _bulletTrailTravelTime;
+
+                var pos = _muzzle.position + direction * _maxBulletTravelDistance;
+                StartCoroutine(ProcessBulletTrail(bulletTrail, pos));
+            }
+            
+            
         }
     }
 

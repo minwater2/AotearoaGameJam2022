@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(DamageHandler))]
 public class SheepController : MonoBehaviour
 {
     [SerializeField] private float _speed = 20f;
@@ -18,12 +21,27 @@ public class SheepController : MonoBehaviour
     [SerializeField] private LayerMask _obstacleLayer;
     
     private Rigidbody _rigidbody;
-
+    private DamageHandler _damageHandler;
+    
     private bool _grazing;
     
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _damageHandler = GetComponent<DamageHandler>();
+        _damageHandler.OnDeath += OnDeath;
+    }
+
+    private void OnDestroy()
+    {
+        _damageHandler.OnDeath -= OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        FlockHandler.Sheepsss.Remove(transform);
+        PhotonNetwork.Destroy(gameObject);
+        WinConditions.Instance.SetSheepCount(-1);
     }
 
     private void FixedUpdate()

@@ -284,9 +284,10 @@ MonoBehaviour:
   _magSize: 5
   _bulletSpread: 5
   _numberOfBullets: 5
+  _maxBulletTravelDistance: 50
   _interactionLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
 --- !u!1 &7172357523184867578
 GameObject:
   m_ObjectHideFlags: 0
