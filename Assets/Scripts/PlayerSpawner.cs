@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cinemachine;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
@@ -11,8 +12,9 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     
     [SerializeField] private GameObject _shepherdPrefab;
     [SerializeField] private GameObject _wolfPrefab;
+    [SerializeField] private CinemachineVirtualCamera _cameraPrefab;
 
-    [SerializeField] private Vector3 _shepherdSpawn;
+    [SerializeField] private Transform _shepherdSpawn;
     [SerializeField] private Transform[] _wolvesSpawnPoints;
     
     // Start is called before the first frame update
@@ -44,16 +46,34 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
         if (propertiesThatChanged.TryGetValue(_SHEPHERD_PROPERTY, out object actorNumber))
         {
+
             if ((int)actorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-                PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn, Quaternion.identity);
+                PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn.position, Quaternion.identity);
+
+            if ((int) actorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                var playerGo = PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn.position, Quaternion.identity);
+                
+                var vCam = Instantiate(_cameraPrefab);
+                vCam.m_Follow = playerGo.transform;
+                vCam.m_LookAt = playerGo.transform;
+            }
+
         }
         if (propertiesThatChanged.TryGetValue(_WOLF_PROPERTY, out object actorNumbers))
         {
             var wolves = ((int[]) actorNumbers).ToList();
             if (!wolves.Contains(PhotonNetwork.LocalPlayer.ActorNumber)) return;
+
+            var playerIndex = PhotonNetwork.CurrentRoom.Players.Keys.ToList().
+                IndexOf(PhotonNetwork.LocalPlayer.ActorNumber);
             
-            var randomSpawnPos = _wolvesSpawnPoints[Random.Range(0, _wolvesSpawnPoints.Length)].position;
-            PhotonNetwork.Instantiate(_wolfPrefab.name, randomSpawnPos, Quaternion.identity);
+            var randomSpawnPos = _wolvesSpawnPoints[playerIndex].position;
+            var playerGo = PhotonNetwork.Instantiate(_wolfPrefab.name, randomSpawnPos, Quaternion.identity);
+            
+            var vCam = Instantiate(_cameraPrefab);
+            vCam.m_Follow = playerGo.transform;
+            vCam.m_LookAt = playerGo.transform;
         }
     }
 }
