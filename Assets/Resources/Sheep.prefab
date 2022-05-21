@@ -95,9 +95,9 @@ GameObject:
   - component: {fileID: 2093551524172460781}
   - component: {fileID: 7214845072399648017}
   - component: {fileID: -1727374500620500770}
-  - component: {fileID: 5797796205140162418}
   - component: {fileID: 8617324428810713974}
   - component: {fileID: 4730659517339292855}
+  - component: {fileID: 1897130240667348126}
   m_Layer: 8
   m_Name: Sheep
   m_TagString: Untagged
@@ -165,6 +165,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _heightOffset: 1
 --- !u!114 &-1727374500620500770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,26 +185,10 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
-  - {fileID: 5797796205140162418}
+  - {fileID: 1897130240667348126}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &5797796205140162418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5826388766425031712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!136 &8617324428810713974
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -230,3 +215,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2013dd8ecefa44f3b4e087235924138e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1897130240667348126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5826388766425031712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

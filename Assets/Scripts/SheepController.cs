@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
@@ -53,6 +54,14 @@ public class SheepController : MonoBehaviourPun
         
         FlockHandler.Sheepsss.Remove(transform);
         WinConditions.Instance.SetSheepCount(-1);
+    }
+
+    private void LateUpdate()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _groundLayer))
+        {
+            transform.position = hit.point + new Vector3(0, _heightOffset, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -118,11 +127,6 @@ public class SheepController : MonoBehaviourPun
                              alignmentSheepVector * _alignment + transform.forward * _momentum + 
                              obstacleAvoidanceVector * _avoidance).normalized;
         _rigidbody.velocity = transform.forward * _speed;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _groundLayer))
-        {
-            transform.position = hit.point + new Vector3(0, _heightOffset, 0);
-        }
     }
 
     private IEnumerator Grazing()
