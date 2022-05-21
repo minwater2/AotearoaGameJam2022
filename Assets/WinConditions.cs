@@ -23,7 +23,8 @@ public class WinConditions : MonoBehaviourPunCallbacks
 
     public TMP_Text SheepCountText;
     public TMP_Text WolfCountText;
-    
+
+    private EndScreenUI endScreen;
     private void Awake()
     {
         if (Instance == null)
@@ -43,6 +44,8 @@ public class WinConditions : MonoBehaviourPunCallbacks
         
             PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);    
         }
+
+        endScreen = GetComponent<EndScreenUI>();
     }
 
     
@@ -72,8 +75,8 @@ public class WinConditions : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown("space"))
         {
-            SetSheepCount(-1);
-            SetWolfKill();
+            SetSheepCount(-10);
+            //SetWolfKill();
         }
     }
 
@@ -83,11 +86,13 @@ public class WinConditions : MonoBehaviourPunCallbacks
 
         if (propertiesThatChanged.TryGetValue(_SHEEPAMOUNT, out var sheep))
         {
+            if ((int)sheep <= 0) endScreen.WinScreen(Team.Shepherd);
             if ((int)sheep >= 0) SheepCountText.text = "Sheep: " + sheep + "/" + SheepAmountStart;
         }
 
         if (propertiesThatChanged.TryGetValue(_WOLFKILLED, out var wolf))
         {
+            if ((int) wolf <= 0) endScreen.WinScreen(Team.Wolf);
             if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + 4;
         }
         
