@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
@@ -19,7 +18,8 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private float _grazeChance = 2f;
     [SerializeField] private float _grazeTime = 2f;
     [SerializeField] private LayerMask _obstacleLayer;
-    [SerializeField] private LayerMask _ground;
+    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private float _heightOffset = 1f;
     
     private Rigidbody _rigidbody;
     private Collider _collider;
@@ -119,8 +119,10 @@ public class SheepController : MonoBehaviourPun
                              obstacleAvoidanceVector * _avoidance).normalized;
         _rigidbody.velocity = transform.forward * _speed;
 
-        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5f, _ground);
-        transform.position = hit.point;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _groundLayer))
+        {
+            transform.position = hit.point + new Vector3(0, _heightOffset, 0);
+        }
     }
 
     private IEnumerator Grazing()

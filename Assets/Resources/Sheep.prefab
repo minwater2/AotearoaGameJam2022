@@ -162,7 +162,7 @@ MonoBehaviour:
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 128
-  _ground:
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 1024
 --- !u!114 &-1727374500620500770
