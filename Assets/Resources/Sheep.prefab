@@ -92,11 +92,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3631661222518687573}
-  - component: {fileID: 308695252943247473}
   - component: {fileID: 2093551524172460781}
   - component: {fileID: 7214845072399648017}
   - component: {fileID: -1727374500620500770}
   - component: {fileID: 5797796205140162418}
+  - component: {fileID: 8617324428810713974}
   m_Layer: 8
   m_Name: Sheep
   m_TagString: Untagged
@@ -120,19 +120,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &308695252943247473
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5826388766425031712}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2093551524172460781
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -162,10 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  _momentum: 10
+  _momentum: 30
   _coherence: 1
-  _separation: 1
-  _avoidance: 1
+  _separation: 2
+  _avoidance: 2
   _alignment: 1
   _viewDistance: 10
   _avoidanceDistance: 4
@@ -213,3 +200,17 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!136 &8617324428810713974
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5826388766425031712}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.32
+  m_Height: 1
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}

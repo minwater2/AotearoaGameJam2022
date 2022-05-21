@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlockHandler : MonoBehaviour
 {
-    private const float _SHEEP_HEIGHT = 0.5f;
+    private const float _SHEEP_HEIGHT = 1f;
 
     public static readonly List<Transform> Sheepsss = new();
     public static int TotalSheep;

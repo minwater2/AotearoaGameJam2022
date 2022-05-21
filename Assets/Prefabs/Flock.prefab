@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sheepName: Sheep
-  _minMaxNumSheep: {x: 30, y: 50}
+  _minMaxNumSheep: {x: 10, y: 20}
   _mapSize: 5
