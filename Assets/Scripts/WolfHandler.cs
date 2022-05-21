@@ -15,13 +15,14 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private float _stunTiming = 1f;
     [SerializeField] private float _wolfTimeout = 5f;
     [SerializeField] private float _shiftCooldown = 5f;
-    [SerializeField] ParticleSystem _particles;
+    [SerializeField] GameObject _particles;
     [SerializeField] private float _wolfSpeed = 10f;
     
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
     private Player _player;
-
+    private Rigidbody _rigidbody;
+    
     private float _sheepSpeed;
     
     private bool _isWolf;
@@ -34,6 +35,7 @@ public class WolfHandler : MonoBehaviourPun
         _photonView = PhotonView.Get(this);
         _damageHandler = GetComponent<DamageHandler>();
         _player = GetComponent<Player>();
+        _rigidbody = GetComponent<Rigidbody>();
         _sheepSpeed = _player.MoveSpeed;
         _damageHandler.OnDeath += OnDeath;
     }
@@ -68,6 +70,8 @@ public class WolfHandler : MonoBehaviourPun
         
         _isWolf = !_isWolf;
         
+        _player.MoveSpeed = _isWolf ? _wolfSpeed : _sheepSpeed;
+        
         if (_isWolf) StartCoroutine(WolfTimeout());
         else
         {
@@ -75,15 +79,15 @@ public class WolfHandler : MonoBehaviourPun
             StartCoroutine(ShiftCooldown());
         }
         
-        StartCoroutine(ShapeShiftSpeed());
+        StartCoroutine(ShapeShiftStun());
         _photonView.RPC(nameof(RpcShapeShift), RpcTarget.All, _isWolf);
     }
 
-    private IEnumerator ShapeShiftSpeed()
+    private IEnumerator ShapeShiftStun()
     {
-        _player.MoveSpeed = 0;
+        _rigidbody.isKinematic = true;
         yield return new WaitForSeconds(_stunTiming);
-        _player.MoveSpeed = _isWolf ? _wolfSpeed : _sheepSpeed;
+        _rigidbody.isKinematic = false;
     }
 
     private IEnumerator WolfTimeout()
@@ -102,7 +106,7 @@ public class WolfHandler : MonoBehaviourPun
     [PunRPC]
     private void RpcShapeShift(bool isWolf)
     {
-        _particles.Play();
+        Instantiate(_particles, transform.position + Vector3.up * 1f, Quaternion.identity);
         StartCoroutine(ShapeShiftModelSwitch(isWolf));
     }
 

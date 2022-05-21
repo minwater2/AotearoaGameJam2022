@@ -35,7 +35,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
             Instance = this;
         }
         else Destroy(gameObject);
-        
+
         if (PhotonNetwork.IsMasterClient)
         {
             
@@ -51,15 +51,15 @@ public class WinConditions : MonoBehaviourPunCallbacks
     }
     
     public int GetSheepDifficulty(int PlayerCount)
-    {
-        switch (PlayerCount)
+    { 
+        return PlayerCount switch
         {
-            case 1: return FlockHandler.Sheepsss.Count/4;
-            case 2: return FlockHandler.Sheepsss.Count/3;
-            case 3: return FlockHandler.Sheepsss.Count/2;
-            case 4: return FlockHandler.Sheepsss.Count/2;
-            default: return FlockHandler.Sheepsss.Count/2;
-        }
+            1 => FlockHandler.Sheepsss.Count / 4,
+            2 => FlockHandler.Sheepsss.Count / 3,
+            3 => FlockHandler.Sheepsss.Count / 2,
+            4 => FlockHandler.Sheepsss.Count / 2,
+            _ => FlockHandler.Sheepsss.Count / 2
+        };
     }
     
     public void SetSheepCount(int change)

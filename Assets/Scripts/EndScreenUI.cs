@@ -11,21 +11,34 @@ public class EndScreenUI : MonoBehaviourPun
     [SerializeField] private GameObject _endGameUI;
     [SerializeField] private GameObject _shepherdWin;
     [SerializeField] private GameObject _wolfWin;
-    
+
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     public void WinScreen(Team winner)
     {
         _endGameUI.SetActive(true);
-        if (winner == Team.Shepherd)_shepherdWin.SetActive(true);
+        if (winner == Team.Shepherd)
+        {
+            _shepherdWin.SetActive(true);
+        }
         else _wolfWin.SetActive(true);
         
-        //Show stats here
+        //TODO: Show stats here
     }
 
     public void RematchButton()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.LoadLevel("MainLevel");    
-        }
+        photonView.RPC(nameof(CmdRematch), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void CmdRematch()
+    {
+        FlockHandler.Sheepsss.Clear();
+        PhotonNetwork.DestroyAll();
+        PhotonNetwork.LoadLevel("MainLevel");
     }
 }

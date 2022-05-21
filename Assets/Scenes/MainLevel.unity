@@ -4366,6 +4366,10 @@ PrefabInstance:
       propertyPath: m_CullTransparentMesh
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7573441455869033351, guid: abe63184fd4ba414f9667f91520603f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abe63184fd4ba414f9667f91520603f2, type: 3}
 --- !u!114 &718440633 stripped
