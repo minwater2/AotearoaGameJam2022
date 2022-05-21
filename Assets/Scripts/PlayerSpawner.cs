@@ -12,7 +12,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject _shepherdPrefab;
     [SerializeField] private GameObject _wolfPrefab;
 
-    [SerializeField] private Vector3 _shepherdSpawn;
+    [SerializeField] private Transform _shepherdSpawn;
     [SerializeField] private Transform[] _wolvesSpawnPoints;
     
     // Start is called before the first frame update
@@ -45,7 +45,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         if (propertiesThatChanged.TryGetValue(_SHEPHERD_PROPERTY, out object actorNumber))
         {
             if ((int)actorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-                PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn, Quaternion.identity);
+                PhotonNetwork.Instantiate(_shepherdPrefab.name, _shepherdSpawn.position, Quaternion.identity);
         }
         if (propertiesThatChanged.TryGetValue(_WOLF_PROPERTY, out object actorNumbers))
         {
