@@ -18,13 +18,13 @@ MonoBehaviour:
     value: 1
   filtering:
     overrideState: 1
-    value: {x: 11.625706, y: 56.625706}
+    value: {x: 34.053566, y: 79.05357}
   minLuminance:
     overrideState: 1
-    value: -0.6
+    value: -1.1
   maxLuminance:
     overrideState: 1
-    value: 6.1
+    value: 1.9
   keyValue:
     overrideState: 1
     value: 1.35
@@ -137,7 +137,7 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 69
+    value: 68
   tint:
     overrideState: 1
     value: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.9873683, y: 1, z: 0.97473675, w: 0}
   gamma:
     overrideState: 1
     value: {x: 1, y: 1, z: 1, w: 0}
