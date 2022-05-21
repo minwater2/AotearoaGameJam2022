@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using Photon.Pun;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
+using Unity.VisualScripting;
 
 public class WinConditions : MonoBehaviourPunCallbacks
 {
@@ -37,15 +39,28 @@ public class WinConditions : MonoBehaviourPunCallbacks
         
         if (PhotonNetwork.IsMasterClient)
         {
+            
             _roomProperties = new Hashtable
             {
-                [_SHEEPAMOUNT] = FlockHandler.Sheepsss.Count/2,
+                [_SHEEPAMOUNT] = GetSheepDifficulty(PlayerSpawner.WolfCount),
                 [_WOLFKILLED] = PlayerSpawner.WolfCount,//Get wolfs from playerspawner
             };
         
             PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);    
         }
         endScreen = GetComponent<EndScreenUI>();
+    }
+    
+    public int GetSheepDifficulty(int PlayerCount)
+    {
+        switch (PlayerCount)
+        {
+            case 1: return FlockHandler.Sheepsss.Count/4;
+            case 2: return FlockHandler.Sheepsss.Count/3;
+            case 3: return FlockHandler.Sheepsss.Count/2;
+            case 4: return FlockHandler.Sheepsss.Count/2;
+            default: return FlockHandler.Sheepsss.Count/2;
+        }
     }
     
     public void SetSheepCount(int change)
