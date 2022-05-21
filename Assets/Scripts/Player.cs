@@ -2,13 +2,11 @@ using Photon.Pun;
 using UnityEngine;
 
 
-[RequireComponent(typeof(ActionController))]
 [RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviourPun
 {
     [SerializeField] private float _moveSpeed;
-
-    private ActionController _actionController;
+    
     private PlayerController _playerController;
     
     private Camera _camera;
@@ -19,7 +17,7 @@ public class Player : MonoBehaviourPun
     {
         _camera = Camera.main;
         _playerController = GetComponent<PlayerController>();
-        _actionController = GetComponent<ActionController>();
+
     }
 
     // Update is called once per frame
@@ -30,12 +28,8 @@ public class Player : MonoBehaviourPun
             ProcessInput();
             
             Rotate();
-
-            PerformAction();
         }
     }
-
-    private void PerformAction() => _actionController.PerformAction();
 
     private void ProcessInput()
     {

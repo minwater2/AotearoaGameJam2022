@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Shotgun : MonoBehaviour, IActionPerformer
+public class Shotgun : MonoBehaviour
 {
     [SerializeField] private TrailRenderer _bulletTrail;
     [SerializeField] private float _bulletTrailTravelTime;
@@ -14,10 +14,8 @@ public class Shotgun : MonoBehaviour, IActionPerformer
     [SerializeField] private LayerMask _interactionLayer;
     
     private bool _canShoot = true;
-
-    public void PerformAction() => Shoot();
     
-    private void Shoot()
+    public void Shoot()
     {
         if (!_canShoot) return;
 
