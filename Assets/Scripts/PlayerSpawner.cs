@@ -69,7 +69,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             var playerIndex = PhotonNetwork.CurrentRoom.Players.Keys.ToList().
                 IndexOf(PhotonNetwork.LocalPlayer.ActorNumber);
             
-            var randomSpawnPos = _wolvesSpawnPoints[playerIndex].position;
+            var randomSpawnPos = _wolvesSpawnPoints[Random.Range(0,_wolvesSpawnPoints.Length)].position;
             var playerGo = PhotonNetwork.Instantiate(_wolfPrefab.name, randomSpawnPos, Quaternion.identity);
             
             var vCam = Instantiate(_cameraPrefab);
