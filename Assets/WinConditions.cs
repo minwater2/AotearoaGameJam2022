@@ -35,7 +35,7 @@ public class WinConditions : MonoBehaviourPunCallbacks
             _roomProperties = new Hashtable
             {
                 [_SHEEPAMOUNT] = FlockHandler.Sheepsss.Count/2,
-                [_WOLFKILLED] = 2,//Get wolfs from playerspawner
+                [_WOLFKILLED] = PlayerSpawner.WolfCount,//Get wolfs from playerspawner
             };
         
             PhotonNetwork.CurrentRoom.SetCustomProperties(_roomProperties);    
@@ -87,8 +87,8 @@ public class WinConditions : MonoBehaviourPunCallbacks
 
         if (propertiesThatChanged.TryGetValue(_WOLFKILLED, out var wolf))
         {
-            if ((int) wolf <= 0) endScreen.WinScreen(Team.Wolf);
-            if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + 4;
+            if ((int)wolf <= 0) endScreen.WinScreen(Team.Wolf);
+            if ((int)wolf >= 0) WolfCountText.text = "Wolf: " + wolf + "/" + PlayerSpawner.WolfCount;
         }
         
         if (propertiesThatChanged.TryGetValue(_TIMER, out var timer))

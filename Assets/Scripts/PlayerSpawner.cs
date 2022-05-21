@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
@@ -16,6 +18,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     [SerializeField] private Transform _shepherdSpawn;
     [SerializeField] private Transform[] _wolvesSpawnPoints;
+    
+    public static int WolfCount = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -39,6 +43,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         };
         
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+        WolfCount = players.Count;
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
