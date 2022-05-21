@@ -7,9 +7,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
 
+    private bool _isWolf;
+    
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _isWolf = TryGetComponent<WolfHandler>(out _);
     }
 
     public void Move(Vector3 velocity)
@@ -25,6 +28,10 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        _rigidbody.MovePosition(_rigidbody.position + _velocity * Time.deltaTime);
+        Vector3 deltaPosition;
+        if (_isWolf) deltaPosition = _velocity.z * transform.forward;
+        else deltaPosition = _velocity;
+
+        _rigidbody.MovePosition(transform.position + deltaPosition * Time.deltaTime);
     }
 }
