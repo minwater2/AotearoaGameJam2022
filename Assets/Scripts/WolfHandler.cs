@@ -35,8 +35,6 @@ public class WolfHandler : MonoBehaviourPun
 
     private void OnDeath()
     {
-        if (!photonView.IsMine) return;
-        
         //_photonView.RPC(nameof(CmdHandleWolfDeath), RpcTarget.All, photonView.ViewID);
         _wolfModel.SetActive(false);
         _sheepModel.SetActive(false);
