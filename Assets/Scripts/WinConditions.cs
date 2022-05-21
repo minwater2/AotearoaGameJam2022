@@ -39,6 +39,9 @@ public class WinConditions : MonoBehaviourPun
         _wolfTotal = PlayerSpawner.WolfCount;
         _currentSheep = _sheepTotal;
         _currentWolves = _wolfTotal;
+        
+        WolfCountText.text = "Wolf: " + _wolfTotal + "/" + _wolfTotal;
+        SheepCountText.text = "Sheep: " + _sheepTotal + "/" + _sheepTotal;
     }
 
     private void Update()
@@ -72,39 +75,43 @@ public class WinConditions : MonoBehaviourPun
     
     public void SetSheepCount(int change)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         _currentSheep += change;
-        photonView.RPC(nameof(RpcWolves), RpcTarget.All, _currentSheep);
+        photonView.RPC(nameof(RpcShepard), RpcTarget.All, _currentSheep);
     }
     
     public void SetWolfKill()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         _currentWolves--;
-        photonView.RPC(nameof(RpcShepard), RpcTarget.All, _currentWolves);
+        photonView.RPC(nameof(RpcWolves), RpcTarget.All, _currentWolves);
     }
 
     [PunRPC]
     private void RpcWolves(int count)
     {
         WolfCountText.text = "Wolf: " + count + "/" + _wolfTotal;
-        if (count > 0) return;
-        endScreen.WinScreen(Team.Wolf);
+        if (count <= 0)
+        {
+            endScreen.WinScreen(Team.Shepherd);
+        }
     }
 
     [PunRPC]
     private void RpcShepard(int count)
     {
         SheepCountText.text = "Sheep: " + count + "/" + _sheepTotal;
-        if (count > 0) return;
-        endScreen.WinScreen(Team.Shepherd);
+        if (count <= 0)
+        {
+            endScreen.WinScreen(Team.Wolf);
+        }
     }
 
     [PunRPC]
     private void RpcTime(float time)
     {
         UpdateTimer(time);
-        if (time > 0) return;
-        endScreen.WinScreen(Team.Shepherd);
+        if (time <= 0)
+        {
+            endScreen.WinScreen(Team.Shepherd);
+        }
     }
 }
