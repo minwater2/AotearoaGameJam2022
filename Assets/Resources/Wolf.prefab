@@ -479,7 +479,7 @@ MonoBehaviour:
   _stunTiming: 1
   _wolfTimeout: 5
   _shiftCooldown: 5
-  _particles: {fileID: 6475128969671652856}
+  _particles: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   _wolfSpeed: 10
   _namePlate: {fileID: 775681249369821607}
 --- !u!136 &4265097286054778523
@@ -680,11 +680,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
---- !u!198 &6475128969671652856 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
-  m_PrefabInstance: {fileID: 6475128969689606712}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6475128969690001592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
