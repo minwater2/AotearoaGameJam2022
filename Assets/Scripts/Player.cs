@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviourPun
 {
-    [SerializeField] private float _moveSpeed;
+    public float MoveSpeed;
     
     private PlayerController _playerController;
     
@@ -40,7 +40,7 @@ public class Player : MonoBehaviourPun
             z = Input.GetAxisRaw("Vertical"),
         }.normalized;
 
-        Vector3 moveVelocity = movement.normalized * _moveSpeed;
+        Vector3 moveVelocity = movement.normalized * MoveSpeed;
         _playerController.Move(moveVelocity);
     }
     

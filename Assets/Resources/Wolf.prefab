@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cd17d7f178ec14ab38283ba873b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  MoveSpeed: 3
 --- !u!114 &1993178404125495286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,7 +225,11 @@ MonoBehaviour:
   _distanceToKill: 5
   _attackCooldown: 5
   _effectsTiming: 0.5
+  _stunTiming: 1
+  _wolfTimeout: 5
+  _shiftCooldown: 5
   _particles: {fileID: 6475128969671652856}
+  _wolfSpeed: 10
 --- !u!136 &4265097286054778523
 CapsuleCollider:
   m_ObjectHideFlags: 0

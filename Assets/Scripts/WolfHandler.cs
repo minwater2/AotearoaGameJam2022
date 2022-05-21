@@ -12,20 +12,29 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private float _distanceToKill = 5f;
     [SerializeField] private float _attackCooldown = 5f;
     [SerializeField] private float _effectsTiming = 0.5f;
+    [SerializeField] private float _stunTiming = 1f;
+    [SerializeField] private float _wolfTimeout = 5f;
+    [SerializeField] private float _shiftCooldown = 5f;
     [SerializeField] ParticleSystem _particles;
-
+    [SerializeField] private float _wolfSpeed = 10f;
+    
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
+    private Player _player;
 
+    private float _sheepSpeed;
+    
     private bool _isWolf;
     private bool _onCooldown;
     private bool _isDead;
+    private bool _canShift = true;
 
     private void Awake()
     {
         _photonView = PhotonView.Get(this);
-        
         _damageHandler = GetComponent<DamageHandler>();
+        _player = GetComponent<Player>();
+        _sheepSpeed = _player.MoveSpeed;
         _damageHandler.OnDeath += OnDeath;
     }
 
@@ -55,8 +64,39 @@ public class WolfHandler : MonoBehaviourPun
     private void ShapeShift()
     {
         if (_isDead) return;
+        if (!_canShift) return;
+        
         _isWolf = !_isWolf;
+        
+        if (_isWolf) StartCoroutine(WolfTimeout());
+        else
+        {
+            StopCoroutine(WolfTimeout());
+            StartCoroutine(ShiftCooldown());
+        }
+        
+        StartCoroutine(ShapeShiftSpeed());
         _photonView.RPC(nameof(RpcShapeShift), RpcTarget.All, _isWolf);
+    }
+
+    private IEnumerator ShapeShiftSpeed()
+    {
+        _player.MoveSpeed = 0;
+        yield return new WaitForSeconds(_stunTiming);
+        _player.MoveSpeed = _isWolf ? _wolfSpeed : _sheepSpeed;
+    }
+
+    private IEnumerator WolfTimeout()
+    {
+        yield return new WaitForSeconds(_wolfTimeout);
+        ShapeShift();
+    }
+
+    private IEnumerator ShiftCooldown()
+    {
+        _canShift = false;
+        yield return new WaitForSeconds(_shiftCooldown);
+        _canShift = true;
     }
     
     [PunRPC]
