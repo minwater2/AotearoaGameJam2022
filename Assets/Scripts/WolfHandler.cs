@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
@@ -11,6 +10,7 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private LayerMask _sheepLayer;
     [SerializeField] private float _distanceToKill = 5f;
     [SerializeField] private float _attackCooldown = 5f;
+    [SerializeField] private ParticleSystem _particles;
 
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
@@ -54,6 +54,7 @@ public class WolfHandler : MonoBehaviourPun
     [PunRPC]
     private void RpcShapeShift(bool isWolf)
     {
+        _particles.Play();
         _wolfModel.SetActive(isWolf);
         _sheepModel.SetActive(!isWolf);
     }
@@ -89,15 +90,6 @@ public class WolfHandler : MonoBehaviourPun
             damageHandler.ProcessDamage();
     }
 
-    [PunRPC]
-    private void CmdAttack(int id)
-    {
-        var deadSheep = PhotonView.Find(id).gameObject;
-        FlockHandler.Sheepsss.Remove(deadSheep.transform);
-        PhotonNetwork.Destroy(deadSheep);
-        WinConditions.Instance.SetSheepCount(-1);
-    }
-    
     private IEnumerator StartAttackCooldown()
     {
         _onCooldown = true;
