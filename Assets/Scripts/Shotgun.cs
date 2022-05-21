@@ -9,7 +9,8 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private Transform _muzzle;
     [SerializeField] private float _shotCooldown;
     [SerializeField] private int _magSize = 5;
-    [SerializeField] private float _bulletSpread = 5f;
+    [SerializeField] private float _horizontalBulletSpread = 5f;
+    [SerializeField] private float _verticalBulletSpread = 5f;
     [SerializeField] private int _numberOfBullets;
 
     [SerializeField] private float _maxBulletTravelDistance;
@@ -26,8 +27,10 @@ public class Shotgun : MonoBehaviour
 
         for (int i = 0; i < _numberOfBullets; i++)
         {
-            var direction = Quaternion.Euler(Random.Range(-_bulletSpread, _bulletSpread), Random.Range(-_bulletSpread, _bulletSpread), 0f)
-                            * _muzzle.forward;
+            var direction = Quaternion.Euler(
+                                Random.Range(-_horizontalBulletSpread, _horizontalBulletSpread), 
+                                Random.Range(-_verticalBulletSpread, _verticalBulletSpread), 
+                                0f) * -_muzzle.forward;
 
             if (Physics.Raycast(_muzzle.position, direction, out RaycastHit info, _maxBulletTravelDistance, _interactionLayer))
             {
@@ -79,8 +82,8 @@ public class Shotgun : MonoBehaviour
         
         while (elapsed < _bulletTrailTravelTime)
         {
-            trail.transform.position = Vector3.Lerp(startPos, goalPoint, elapsed);
-            elapsed += Time.deltaTime / trail.time;
+            trail.transform.position = Vector3.Lerp(startPos, goalPoint, elapsed / trail.time);
+            elapsed += Time.deltaTime;
 
             yield return null;
         }
