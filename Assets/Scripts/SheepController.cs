@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -27,6 +28,7 @@ public class SheepController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         if (_grazing) return;
 
         if (Random.Range(0f, 100f) <= _grazeChance)

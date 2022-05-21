@@ -19,6 +19,7 @@ public class FlockHandler : MonoBehaviour
 
     private void SpawnSheep()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         int numSheep = Random.Range(_minMaxNumSheep.x, _minMaxNumSheep.y);
 
         for (int i = 0; i < numSheep; i++)
