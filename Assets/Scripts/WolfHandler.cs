@@ -11,11 +11,12 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private LayerMask _sheepLayer;
     [SerializeField] private float _distanceToKill = 5f;
     [SerializeField] private float _attackCooldown = 5f;
-    [SerializeField] private ParticleSystem _particles;
+    [SerializeField] private float _effectsTiming = 0.5f;
 
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
-    
+    private ParticleSystem _particles;
+
     private bool _isWolf;
     private bool _onCooldown;
     private bool _isDead;
@@ -26,6 +27,7 @@ public class WolfHandler : MonoBehaviourPun
         
         _damageHandler = GetComponent<DamageHandler>();
         _damageHandler.OnDeath += OnDeath;
+        _particles = GetComponent<ParticleSystem>();
     }
 
     private void OnDestroy()
@@ -62,6 +64,12 @@ public class WolfHandler : MonoBehaviourPun
     private void RpcShapeShift(bool isWolf)
     {
         _particles.Play();
+        StartCoroutine(ShapeShiftModelSwitch(isWolf));
+    }
+
+    private IEnumerator ShapeShiftModelSwitch(bool isWolf)
+    {
+        yield return new WaitForSeconds(_effectsTiming);
         _wolfModel.SetActive(isWolf);
         _sheepModel.SetActive(!isWolf);
     }
