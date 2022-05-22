@@ -160,7 +160,7 @@ MonoBehaviour:
   - {fileID: 3636434917717729365}
   - {fileID: 7663948755759540684}
   _cameraPrefab: {fileID: 8211674627253461942, guid: dea99bccce9d1c0408cfdcd99e5b01cb, type: 3}
-  _shepherdCamFollowOffset: {x: 0, y: 12.5, z: -12.5}
+  _shepherdCamFollowOffset: {x: 0, y: 17.5, z: -17.5}
   _wolfCamFollowOffset: {x: 0, y: 20, z: -20}
 --- !u!1 &3636434916319891157
 GameObject:
