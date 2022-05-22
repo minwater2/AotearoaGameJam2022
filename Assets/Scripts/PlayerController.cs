@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
         _isWolf = TryGetComponent<WolfHandler>(out _);
 
         if (!PhotonNetwork.IsMasterClient) return;
-        if (!_isWolf) FlockHandler.PlayersToAvoid.Add(transform);
+        if (!_isWolf) FlockHandler.ShepardsToAvoid.Add(transform);
     }
 
     public void Move(Vector3 velocity)

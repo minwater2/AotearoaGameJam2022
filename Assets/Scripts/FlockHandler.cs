@@ -7,7 +7,8 @@ public class FlockHandler : MonoBehaviour
     private const float _SHEEP_HEIGHT = 10f;
 
     public static readonly List<Transform> Sheepsss = new();
-    public static readonly List<Transform> PlayersToAvoid = new();
+    public static readonly List<Transform> WolvesToAvoid = new();
+    public static readonly List<Transform> ShepardsToAvoid = new();
 
     [SerializeField] private string _sheepName = "Sheep";
     [SerializeField] private Vector2Int _minMaxNumSheep;

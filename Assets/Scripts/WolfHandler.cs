@@ -22,7 +22,8 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] GameObject _particles;
     [SerializeField] private float _wolfSpeed = 10f;
     [SerializeField] private NamePlate _namePlate;
-    
+    [SerializeField] private Animator _animator;
+
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
     private Player _player;
@@ -68,6 +69,8 @@ public class WolfHandler : MonoBehaviourPun
         _wolfModel.SetActive(false);
         _sheepModel.SetActive(false);
         _isDead = true;
+        gameObject.layer = LayerMask.NameToLayer("WolfDead");
+        _player.MoveSpeed = _wolfSpeed;
         
         if (PhotonNetwork.IsMasterClient)
             WinConditions.Instance.SetWolfKill();
@@ -96,13 +99,12 @@ public class WolfHandler : MonoBehaviourPun
         {
             UITimer.Instance.StartWolfTimeout(_wolfTimeout);
             StartCoroutine(WolfTimeout());
-            FlockHandler.PlayersToAvoid.Add(transform);
         }
         else
         {
             UITimer.Instance.StartTransitionCooldown(_shiftCooldown);
             StartCoroutine(ShiftCooldown());
-            FlockHandler.PlayersToAvoid.Remove(transform);
+            FlockHandler.WolvesToAvoid.Remove(transform);
         }
         
         StartCoroutine(ShapeShiftStun());
@@ -134,6 +136,10 @@ public class WolfHandler : MonoBehaviourPun
     {
         Instantiate(_particles, transform.position + Vector3.up * 1f, Quaternion.identity);
         StartCoroutine(ShapeShiftModelSwitch(isWolf));
+        
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (isWolf) FlockHandler.WolvesToAvoid.Add(transform);
+        else FlockHandler.WolvesToAvoid.Remove(transform);
     }
 
     private IEnumerator ShapeShiftModelSwitch(bool isWolf)
@@ -148,6 +154,9 @@ public class WolfHandler : MonoBehaviourPun
         if (_isDead) return;
         if (!_isWolf) return;
         if (_onCooldown) return;
+        
+        if(_animator)
+            _animator.SetTrigger("Attack");
         
         var results = Physics.OverlapSphere(transform.position, _distanceToKill, _sheepLayer);
         

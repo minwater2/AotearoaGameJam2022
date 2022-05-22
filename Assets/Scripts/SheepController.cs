@@ -13,7 +13,8 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private float _separation = 50f;
     [SerializeField] private float _avoidance = 10f;
     [SerializeField] private float _alignment = 20f;
-    [SerializeField] private float _playerAvoidance = 10f;
+    [SerializeField] private float _shepardAvoidance = 3f;
+    [SerializeField] private float _wolfAvoidance = 3f;
     [SerializeField] private float _viewDistance = 10f;
     [SerializeField] private float _avoidanceDistance = 2f;
     [SerializeField] private float _grazeChance = 2f;
@@ -21,6 +22,7 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _heightOffset = 1f;
+    [SerializeField] private Animator _animator;
     
     private Rigidbody _rigidbody;
     private Collider _collider;
@@ -93,13 +95,22 @@ public class SheepController : MonoBehaviourPun
             separationSheepVector += direction.normalized;
         }
 
-        var playerAvoidanceVector = Vector3.zero;
+        var shepardAvoidanceVector = Vector3.zero;
         
-        foreach (var player in FlockHandler.PlayersToAvoid)
+        foreach (var shepard in FlockHandler.ShepardsToAvoid)
         {
-            float distance = Vector3.Distance(player.position, transform.position);
+            float distance = Vector3.Distance(shepard.position, transform.position);
             if (distance > _viewDistance) continue;
-            playerAvoidanceVector += player.position - transform.position;
+            shepardAvoidanceVector += shepard.position - transform.position;
+        }
+
+        var wolfAvoidanceVector = Vector3.zero;
+
+        foreach (var wolf in FlockHandler.WolvesToAvoid)
+        {
+            float distance = Vector3.Distance(wolf.position, transform.position);
+            if (distance > _viewDistance) continue;
+            wolfAvoidanceVector += wolf.position - transform.position;
         }
         
         // coherence
@@ -114,9 +125,13 @@ public class SheepController : MonoBehaviourPun
         alignmentSheepVector.y = 0;
         alignmentSheepVector = alignmentSheepVector.normalized;
         
-        // player avoidance
-        playerAvoidanceVector.y = 0;
-        playerAvoidanceVector = -playerAvoidanceVector.normalized;
+        // shepard avoidance
+        shepardAvoidanceVector.y = 0;
+        shepardAvoidanceVector = -shepardAvoidanceVector.normalized;
+        
+        // wolf avoidance
+        wolfAvoidanceVector.y = 0;
+        wolfAvoidanceVector = -wolfAvoidanceVector.normalized;
         
         var obstacleAvoidanceVector = Vector3.zero;
         
@@ -137,9 +152,27 @@ public class SheepController : MonoBehaviourPun
         
         // set rotation and speed
         transform.forward = (coherenceSheepVector * _coherence + separationSheepVector * _separation +
-                             alignmentSheepVector * _alignment + playerAvoidanceVector * _playerAvoidance +
-                             obstacleAvoidanceVector * _avoidance + transform.forward * _momentum).normalized;
-        _rigidbody.velocity = transform.forward * _speed;
+                             alignmentSheepVector * _alignment + shepardAvoidanceVector * _shepardAvoidance +
+                             wolfAvoidanceVector * _wolfAvoidance + obstacleAvoidanceVector * _avoidance + 
+                             transform.forward * _momentum).normalized;
+        float speed;
+
+        if (wolfAvoidanceVector == Vector3.zero)
+        {
+            speed = _speed;
+        }
+        else
+        {
+            speed =  _speed * 2;
+            StopCoroutine(Grazing());
+            _grazing = false;
+            _rigidbody.isKinematic = false;
+        }
+        
+        _rigidbody.velocity = transform.forward * speed;
+        
+        if(_animator)
+            _animator.SetFloat("MoveSpeed", _rigidbody.velocity.magnitude);
     }
 
     private IEnumerator Grazing()
@@ -149,5 +182,8 @@ public class SheepController : MonoBehaviourPun
         yield return new WaitForSeconds(_grazeTime);
         _grazing = false;
         _rigidbody.isKinematic = false;
+        
+        if(_animator)
+            _animator.SetFloat("MoveSpeed", 0f);
     }
 }

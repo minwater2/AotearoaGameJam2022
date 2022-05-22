@@ -155,7 +155,8 @@ MonoBehaviour:
   _separation: 2
   _avoidance: 2
   _alignment: 1
-  _playerAvoidance: 4
+  _shepardAvoidance: 3
+  _wolfAvoidance: 3
   _viewDistance: 10
   _avoidanceDistance: 4
   _grazeChance: 0.5
@@ -167,6 +168,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _heightOffset: 1
+  _animator: {fileID: 0}
 --- !u!114 &-1727374500620500770
 MonoBehaviour:
   m_ObjectHideFlags: 0
