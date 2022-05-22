@@ -171,6 +171,7 @@ MonoBehaviour:
   _heightOffset: 1
   _animator: {fileID: 5904953322170156856}
   _meshRenderer: {fileID: 6738439126909122168}
+  _deathPuff: {fileID: 6545906834599912811, guid: a83265ddbc4ab074881b71da8b1ed9f9, type: 3}
 --- !u!114 &-1727374500620500770
 MonoBehaviour:
   m_ObjectHideFlags: 0
