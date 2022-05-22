@@ -184,7 +184,8 @@ public class WolfHandler : MonoBehaviourPun
         if (_isDead)
         {
             _wolfModel.SetActive(false);
-            _wolfModel.SetActive(false);
+            _sheepModel.SetActive(false);
+            _ghostModel.SetActive(true);
         }
     }
 
