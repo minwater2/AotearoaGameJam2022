@@ -177,6 +177,11 @@ MonoBehaviour:
   _dedSheep:
   - {fileID: 8300000, guid: 80d420ded2894114eb6001ac1e1a7b81, type: 3}
   _audioSource: {fileID: -6075492634207840390}
+  _lambChop: {fileID: 8229357668324032898, guid: 3bd552bb964a2414cbbb1fc8812a6ff8, type: 3}
+  _lambChopMinMax: {x: 3, y: 6}
+  _forcePower: 50
+  _forceRadius: 10
+  _forceUpPower: 10
 --- !u!114 &-1727374500620500770
 MonoBehaviour:
   m_ObjectHideFlags: 0
