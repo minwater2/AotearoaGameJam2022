@@ -6,7 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviourPun
 {
     public float MoveSpeed;
-    
+
+    public PlayerController PlayerController => _playerController;
     private PlayerController _playerController;
     
     private Camera _camera;
