@@ -151,8 +151,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Wolf
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8928352a8f3275941a81b7eb8f369a81, type: 2}
+  m_sharedMaterial: {fileID: -1664859453832185242, guid: 8928352a8f3275941a81b7eb8f369a81, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7851503562588108090
@@ -257,7 +257,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 2.773}
-  m_SizeDelta: {x: 500, y: 100}
+  m_SizeDelta: {x: 750, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2132218803883389401
 Canvas:
@@ -484,6 +484,7 @@ MonoBehaviour:
   _particles: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   _wolfSpeed: 10
   _namePlate: {fileID: 775681249369821607}
+  _animator: {fileID: 0}
 --- !u!136 &4265097286054778523
 CapsuleCollider:
   m_ObjectHideFlags: 0

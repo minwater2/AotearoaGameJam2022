@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviourPun
 
     private bool _isWolf;
     public bool DisableMovement;
+    [SerializeField] private GameObject[] _runningParticles;
     
     private void Start()
     {
@@ -29,6 +30,11 @@ public class PlayerController : MonoBehaviourPun
     public void Move(Vector3 velocity)
     {
         _velocity = velocity;
+
+        if (!_isWolf && _velocity.magnitude > 0)
+        {
+            _runningParticles[0].gameObject.GetComponent<ParticleSystem>().enableEmission = true;
+        }
     }
 
     public void LookAt(Vector3 point)
@@ -39,6 +45,14 @@ public class PlayerController : MonoBehaviourPun
     
     private void FixedUpdate()
     {
+        if (_velocity.magnitude <= 0)
+        {
+            if (!_isWolf)
+            {
+                _runningParticles[0].GetComponent<ParticleSystem>().enableEmission = false;
+            }
+        }
+        
         if (DisableMovement)
         {
             if(_animator)

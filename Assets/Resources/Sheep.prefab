@@ -168,6 +168,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _heightOffset: 1
+  _animator: {fileID: 0}
 --- !u!114 &-1727374500620500770
 MonoBehaviour:
   m_ObjectHideFlags: 0

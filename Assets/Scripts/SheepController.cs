@@ -22,6 +22,7 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _heightOffset = 1f;
+    [SerializeField] private Animator _animator;
     
     private Rigidbody _rigidbody;
     private Collider _collider;
@@ -169,6 +170,9 @@ public class SheepController : MonoBehaviourPun
         }
         
         _rigidbody.velocity = transform.forward * speed;
+        
+        if(_animator)
+            _animator.SetFloat("MoveSpeed", _rigidbody.velocity.magnitude);
     }
 
     private IEnumerator Grazing()
@@ -178,5 +182,8 @@ public class SheepController : MonoBehaviourPun
         yield return new WaitForSeconds(_grazeTime);
         _grazing = false;
         _rigidbody.isKinematic = false;
+        
+        if(_animator)
+            _animator.SetFloat("MoveSpeed", 0f);
     }
 }
