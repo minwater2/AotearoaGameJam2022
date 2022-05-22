@@ -32,12 +32,26 @@ public class PlayerController : MonoBehaviourPun
     {
         _velocity = velocity;
 
+        if (_velocity.magnitude <= 0)
+        {
+            if (!_isWolf)
+            {
+                photonView.RPC(nameof(ParticleChange), RpcTarget.All,false);
+            }
+        }
+        
         if (!_isWolf && _velocity.magnitude > 0)
         {
-            _runningParticles[0].gameObject.GetComponent<ParticleSystem>().enableEmission = true;
+            photonView.RPC(nameof(ParticleChange), RpcTarget.All,true);
         }
     }
 
+    [PunRPC]
+    private void ParticleChange(bool particlesOn)
+    {
+        _runningParticles[0].gameObject.GetComponent<ParticleSystem>().enableEmission = particlesOn;
+    }
+    
     public void LookAt(Vector3 point)
     {
         var correctHeightPoint = new Vector3(point.x, transform.position.y, point.z);
@@ -46,14 +60,6 @@ public class PlayerController : MonoBehaviourPun
     
     private void FixedUpdate()
     {
-        if (_velocity.magnitude <= 0)
-        {
-            if (!_isWolf)
-            {
-                _runningParticles[0].GetComponent<ParticleSystem>().enableEmission = false;
-            }
-        }
-        
         if (DisableMovement)
         {
             if(_animator)
