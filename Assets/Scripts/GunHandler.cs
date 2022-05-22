@@ -25,13 +25,18 @@ public class GunHandler : MonoBehaviourPun
                 if (!_canShoot) return;
                 
                 _controller.DisableMovement = true;
-                _animator.SetTrigger("Shoot");
+                photonView.RPC(nameof(CmdTriggerShoot), RpcTarget.All);
                 StartCoroutine(ProcessCooldown());
                 UITimer.Instance.StartShepardAttackTimeout(_shotCooldown);
             }
         }
     }
-    
+
+    [PunRPC]
+    private void CmdTriggerShoot()
+    {
+        _animator.SetTrigger("Shoot");
+    }
     
     private IEnumerator ProcessCooldown()
     {

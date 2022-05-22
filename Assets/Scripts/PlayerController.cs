@@ -62,10 +62,10 @@ public class PlayerController : MonoBehaviourPun
     {
         if (DisableMovement)
         {
-            if(_animator)
+            if(_animator && _animator.gameObject.activeSelf)
                 _animator.SetFloat("MoveSpeed", 0f);
             
-            if(_animator2)
+            if(_animator2 && _animator2.gameObject.activeSelf)
                 _animator2.SetFloat("MoveSpeed", 0f);
             return;
         }
@@ -74,10 +74,10 @@ public class PlayerController : MonoBehaviourPun
         if (_isWolf) deltaPosition = _velocity.z * transform.forward;
         else deltaPosition = _velocity;
 
-        if(_animator)
+        if(_animator && _animator.gameObject.activeSelf)
             _animator.SetFloat("MoveSpeed", _velocity.magnitude);
         
-        if(_animator2)
+        if(_animator2 && _animator2.gameObject.activeSelf)
             _animator2.SetFloat("MoveSpeed", _velocity.magnitude);
         
         _rigidbody.MovePosition(transform.position + deltaPosition * Time.deltaTime);

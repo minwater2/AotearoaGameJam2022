@@ -180,8 +180,7 @@ public class WolfHandler : MonoBehaviourPun
         if (!_isWolf) return;
         if (_onCooldown) return;
         
-        if(_wolfAnimator)
-            _wolfAnimator.SetTrigger("Attack");
+        photonView.RPC(nameof(CmdTriggerWolfAttack), RpcTarget.All);
         
         var results = Physics.OverlapSphere(transform.position, _distanceToKill, _sheepLayer);
         
@@ -239,5 +238,12 @@ public class WolfHandler : MonoBehaviourPun
         _player.PlayerController.DisableMovement = false;
         _grazeCoroutine = null;
         _sheepAnimator.SetBool("Graze", false);
+    }
+
+    [PunRPC]
+    private void CmdTriggerWolfAttack()
+    {
+        if(_wolfAnimator)
+            _wolfAnimator.SetTrigger("Attack");
     }
 }

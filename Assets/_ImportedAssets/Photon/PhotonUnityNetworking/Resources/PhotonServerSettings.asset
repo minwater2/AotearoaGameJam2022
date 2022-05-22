@@ -36,18 +36,19 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - CmdHandleDeath
-  - CmdHandleWolfDeath
+  - CmdRematch
+  - CmdTriggerShoot
+  - CmdTriggerWolfAttack
   - DestroyRpc
   - DestroySpaceship
   - Fire
+  - ParticleChange
   - RespawnSpaceship
   - RpcShapeShift
-  - RPCSpawnCloud
-  - CmdRematch
   - RpcShepard
-  - RpcWolves
+  - RPCSpawnCloud
   - RpcTime
-  - ParticleChange
+  - RpcWolves
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
