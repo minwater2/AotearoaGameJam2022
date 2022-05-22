@@ -19,6 +19,34 @@ public class Shotgun : MonoBehaviour
     {
         Instantiate(BulletParticles, _muzzle.position, Quaternion.identity);
         
+        for (int i = 0; i < _numberOfBullets; i++)
+        {
+            var direction = Quaternion.Euler(
+                Random.Range(-_horizontalBulletSpread, _horizontalBulletSpread), 
+                Random.Range(-_verticalBulletSpread, _verticalBulletSpread), 
+                0f) * -_muzzle.forward;
+
+            if (Physics.Raycast(_muzzle.position, direction, out RaycastHit info, _maxBulletTravelDistance, _interactionLayer))
+            {
+                // show bullet trace
+                var bulletTrail = Instantiate(_bulletTrail, _muzzle.position, Quaternion.identity);
+                bulletTrail.time = _bulletTrailTravelTime;
+                
+                var pos = _muzzle.position + direction * _maxBulletTravelDistance;
+                StartCoroutine(ProcessBulletTrail(bulletTrail, pos));
+            }
+            else
+            {
+                // show bullet trace
+                var bulletTrail = Instantiate(_bulletTrail, _muzzle.position, Quaternion.identity);
+                var trail = bulletTrail.GetComponent<TrailRenderer>();
+                trail.time = _bulletTrailTravelTime;
+                
+                var pos = _muzzle.position + direction * _maxBulletTravelDistance;
+                StartCoroutine(ProcessBulletTrail(trail, pos));
+            }
+        }
+        
         if (!PhotonNetwork.IsMasterClient) return;
         
         for (int i = 0; i < _numberOfBullets; i++)
@@ -32,27 +60,17 @@ public class Shotgun : MonoBehaviour
             {
                 ProcessBulletHit(info);
             }
-            else
-            {
-                // show bullet trace
-                var bulletTrail = PhotonNetwork.Instantiate(_bulletTrail.name, _muzzle.position, Quaternion.identity);
-                var trail = bulletTrail.GetComponent<TrailRenderer>();
-                trail.time = _bulletTrailTravelTime;
-                
-                var pos = _muzzle.position + direction * _maxBulletTravelDistance;
-                StartCoroutine(ProcessBulletTrail(trail, pos));
-            }
         }
     }
 
     private void ProcessBulletHit(RaycastHit info)
     {
-        // show bullet trace
-        var bulletTrail = PhotonNetwork.Instantiate(_bulletTrail.name, _muzzle.position, Quaternion.identity);
-        var trail = bulletTrail.GetComponent<TrailRenderer>();
-        trail.time = _bulletTrailTravelTime;
-        
-        StartCoroutine(ProcessBulletTrail(trail, info.point));
+        // // show bullet trace
+        // var bulletTrail = PhotonNetwork.Instantiate(_bulletTrail.name, _muzzle.position, Quaternion.identity);
+        // var trail = bulletTrail.GetComponent<TrailRenderer>();
+        // trail.time = _bulletTrailTravelTime;
+        //
+        // StartCoroutine(ProcessBulletTrail(trail, info.point));
 
         if (info.collider.TryGetComponent<DamageHandler>(out var damageHandler))
         {
@@ -77,8 +95,8 @@ public class Shotgun : MonoBehaviour
         trail.transform.position = goalPoint;
         
         // spawn impact here
-        if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.Destroy(trail.gameObject);
+        // if(PhotonNetwork.IsMasterClient)
+        //     PhotonNetwork.Destroy(trail.gameObject);
     }
 
 }
