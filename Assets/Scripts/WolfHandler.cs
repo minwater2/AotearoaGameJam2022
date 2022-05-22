@@ -23,8 +23,9 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private Animator _wolfAnimator;
     [SerializeField] private Animator _sheepAnimator;
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _wolfAttack;
-    [SerializeField] private AudioClip _wolfDed;
+    [SerializeField] private AudioClip[] _wolfAttack;
+    [SerializeField] private AudioClip[] _wolfDed;
+    [SerializeField] private AudioClip[] _wolfTransition;
 
 
     private PhotonView _photonView;
@@ -79,7 +80,7 @@ public class WolfHandler : MonoBehaviourPun
         gameObject.layer = LayerMask.NameToLayer("WolfDead");
         _player.MoveSpeed = _wolfSpeed;
         
-        _audioSource.PlayOneShot(_wolfDed);
+        _audioSource.PlayOneShot(_wolfDed[Random.Range(0, _wolfDed.Length)]);
         
         if (PhotonNetwork.IsMasterClient)
             WinConditions.Instance.SetWolfKill();
@@ -165,6 +166,7 @@ public class WolfHandler : MonoBehaviourPun
     {
         Instantiate(_particles, transform.position + Vector3.up * 1f, Quaternion.identity);
         StartCoroutine(ShapeShiftModelSwitch(isWolf));
+        _audioSource.PlayOneShot(_wolfTransition[Random.Range(0, _wolfTransition.Length)]);
         
         if (!PhotonNetwork.IsMasterClient) return;
         if (isWolf) FlockHandler.WolvesToAvoid.Add(transform);
@@ -247,7 +249,7 @@ public class WolfHandler : MonoBehaviourPun
     [PunRPC]
     private void RpcTriggerWolfAttack()
     {
-        _audioSource.PlayOneShot(_wolfAttack);
+        _audioSource.PlayOneShot(_wolfAttack[Random.Range(0, _wolfAttack.Length)], 0.5f);
         
         if(_wolfAnimator)
             _wolfAnimator.SetTrigger("Attack");

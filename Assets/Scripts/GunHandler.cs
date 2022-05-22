@@ -7,6 +7,8 @@ public class GunHandler : MonoBehaviourPun
     [SerializeField] private Shotgun _shotgun;
     [SerializeField] private float _shotCooldown = 1.25f;
     [SerializeField] private Animator _animator;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip[] _audioClip;
     
     private PlayerController _controller;
     private bool _canShoot = true;
@@ -25,7 +27,7 @@ public class GunHandler : MonoBehaviourPun
                 if (!_canShoot) return;
                 
                 _controller.DisableMovement = true;
-                photonView.RPC(nameof(CmdTriggerShoot), RpcTarget.All);
+                photonView.RPC(nameof(RpcTriggerShoot), RpcTarget.All);
                 StartCoroutine(ProcessCooldown());
                 UITimer.Instance.StartShepardAttackTimeout(_shotCooldown);
             }
@@ -33,8 +35,9 @@ public class GunHandler : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void CmdTriggerShoot()
+    private void RpcTriggerShoot()
     {
+        _audioSource.PlayOneShot(_audioClip[Random.Range(0, _audioClip.Length)]);
         _animator.SetTrigger("Shoot");
     }
     

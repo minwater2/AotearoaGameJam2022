@@ -410,8 +410,16 @@ MonoBehaviour:
   _wolfAnimator: {fileID: 9061373498987484271}
   _sheepAnimator: {fileID: 6301991742829533132}
   _audioSource: {fileID: 3256296142754804163}
-  _wolfAttack: {fileID: 8300000, guid: ac6034ade498bb94b87620cdf6eac48b, type: 3}
-  _wolfDed: {fileID: 8300000, guid: 80d420ded2894114eb6001ac1e1a7b81, type: 3}
+  _wolfAttack:
+  - {fileID: 8300000, guid: ac6034ade498bb94b87620cdf6eac48b, type: 3}
+  _wolfDed:
+  - {fileID: 8300000, guid: 8a21901c632716441a5bf212cd55e656, type: 3}
+  - {fileID: 8300000, guid: 4024c1685568b794799b340690a7452e, type: 3}
+  - {fileID: 8300000, guid: f8e80d2e91d9bbb4ab410740443e029c, type: 3}
+  - {fileID: 8300000, guid: 80a7845ad186e8f4fbebf2a815180119, type: 3}
+  - {fileID: 8300000, guid: 76c2aaee953e74049a9274df0d72d348, type: 3}
+  _wolfTransition:
+  - {fileID: 8300000, guid: c56b09e0ffb6f8a48b56559161330457, type: 3}
 --- !u!136 &4265097286054778523
 CapsuleCollider:
   m_ObjectHideFlags: 0
