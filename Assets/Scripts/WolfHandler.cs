@@ -99,13 +99,12 @@ public class WolfHandler : MonoBehaviourPun
         {
             UITimer.Instance.StartWolfTimeout(_wolfTimeout);
             StartCoroutine(WolfTimeout());
-            FlockHandler.PlayersToAvoid.Add(transform);
         }
         else
         {
             UITimer.Instance.StartTransitionCooldown(_shiftCooldown);
             StartCoroutine(ShiftCooldown());
-            FlockHandler.PlayersToAvoid.Remove(transform);
+            FlockHandler.WolvesToAvoid.Remove(transform);
         }
         
         StartCoroutine(ShapeShiftStun());
@@ -137,6 +136,10 @@ public class WolfHandler : MonoBehaviourPun
     {
         Instantiate(_particles, transform.position + Vector3.up * 1f, Quaternion.identity);
         StartCoroutine(ShapeShiftModelSwitch(isWolf));
+        
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (isWolf) FlockHandler.WolvesToAvoid.Add(transform);
+        else FlockHandler.WolvesToAvoid.Remove(transform);
     }
 
     private IEnumerator ShapeShiftModelSwitch(bool isWolf)
