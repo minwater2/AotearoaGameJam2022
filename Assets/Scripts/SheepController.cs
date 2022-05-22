@@ -24,6 +24,7 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private float _heightOffset = 1f;
     [SerializeField] private Animator _animator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
+    [SerializeField] private GameObject _deathPuff;
     
     private Rigidbody _rigidbody;
     private Collider _collider;
@@ -55,6 +56,7 @@ public class SheepController : MonoBehaviourPun
         
         FlockHandler.Sheepsss.Remove(transform);
         WinConditions.Instance.SetSheepCount(-1);
+        PhotonNetwork.Instantiate(_deathPuff.name, transform.position, Quaternion.identity);
     }
 
     private void LateUpdate()

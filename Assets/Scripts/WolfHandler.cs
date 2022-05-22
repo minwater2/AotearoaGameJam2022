@@ -24,6 +24,9 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private NamePlate _namePlate;
     [SerializeField] private Animator _wolfAnimator;
     [SerializeField] private Animator _sheepAnimator;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _wolfAttack;
+
 
     private PhotonView _photonView;
     private DamageHandler _damageHandler;

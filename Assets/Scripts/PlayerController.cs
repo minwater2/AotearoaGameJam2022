@@ -34,13 +34,10 @@ public class PlayerController : MonoBehaviourPun
 
         if (_velocity.magnitude <= 0)
         {
-            if (!_isWolf)
-            {
-                photonView.RPC(nameof(ParticleChange), RpcTarget.All,false);
-            }
+            photonView.RPC(nameof(ParticleChange), RpcTarget.All,false);
         }
         
-        if (!_isWolf && _velocity.magnitude > 0)
+        if (_velocity.magnitude > 0)
         {
             photonView.RPC(nameof(ParticleChange), RpcTarget.All,true);
         }
