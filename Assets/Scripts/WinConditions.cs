@@ -93,6 +93,7 @@ public class WinConditions : MonoBehaviourPun
         if (count <= 0)
         {
             endScreen.WinScreen(Team.Shepherd);
+            WolfCountText.text = "Wolf: " + 0 + "/" + total;
         }
     }
 
@@ -103,6 +104,7 @@ public class WinConditions : MonoBehaviourPun
         if (count <= 0)
         {
             endScreen.WinScreen(Team.Wolf);
+            SheepCountText.text = "Sheep: " + 0 + "/" + total;
         }
     }
 
