@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
 
         if (!_isWolf && _velocity.magnitude > 0)
         {
-            print("Moving");
             _runningParticles[0].gameObject.GetComponent<ParticleSystem>().enableEmission = true;
         }
     }
@@ -43,7 +42,6 @@ public class PlayerController : MonoBehaviour
     {
         if (_velocity.magnitude <= 0)
         {
-            print("stop");
             if (!_isWolf)
             {
                 _runningParticles[0].GetComponent<ParticleSystem>().enableEmission = false;
