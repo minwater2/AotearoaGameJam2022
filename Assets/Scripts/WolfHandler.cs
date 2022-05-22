@@ -10,6 +10,7 @@ public class WolfHandler : MonoBehaviourPun
     
     [SerializeField] private GameObject _wolfModel;
     [SerializeField] private GameObject _sheepModel;
+    [SerializeField] private GameObject _ghostModel;
     [SerializeField] private LayerMask _sheepLayer;
     [SerializeField] private float _distanceToKill = 5f;
     [SerializeField] private float _attackCooldown = 5f;
@@ -76,6 +77,7 @@ public class WolfHandler : MonoBehaviourPun
         if (_isDead) return;
         _wolfModel.SetActive(false);
         _sheepModel.SetActive(false);
+        _ghostModel.SetActive(true);
         _isDead = true;
         gameObject.layer = LayerMask.NameToLayer("WolfDead");
         _player.MoveSpeed = _wolfSpeed;
