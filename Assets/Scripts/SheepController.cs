@@ -27,6 +27,12 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private GameObject _deathPuff;
     [SerializeField] private AudioClip[] _dedSheep;
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private GameObject _lambChop;
+    [SerializeField] private Vector2 _lambChopMinMax = new Vector2( 3, 5);
+    [SerializeField] private float _forcePower = 50f;
+    [SerializeField] private float _forceRadius = 10f;
+    [SerializeField] private float _forceUpPower = 10f;
+    
     
     private Rigidbody _rigidbody;
     private Collider _collider;
@@ -56,7 +62,16 @@ public class SheepController : MonoBehaviourPun
 
         _audioSource.PlayOneShot(_dedSheep[Random.Range(0, _dedSheep.Length)]);
         Destroy(GetComponent<BaaaaAudioHandler>());
-        
+
+        var amount = Random.Range(_lambChopMinMax.x, _lambChopMinMax.y); 
+        for (int i = 0; i < amount; i++)
+        {
+            var lambChop = Instantiate(_lambChop, transform.position, Quaternion.identity);
+            var rb = lambChop.GetComponent<Rigidbody>();
+            rb.AddExplosionForce(_forcePower, transform.position, _forceRadius, _forceUpPower);
+            Destroy(lambChop, 10f);
+        }
+   
         if (!PhotonNetwork.IsMasterClient) return;
         
         FlockHandler.Sheepsss.Remove(transform);
