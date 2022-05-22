@@ -27,6 +27,7 @@ public class GunHandler : MonoBehaviourPun
                 _controller.DisableMovement = true;
                 _animator.SetTrigger("Shoot");
                 StartCoroutine(ProcessCooldown());
+                UITimer.Instance.StartShepardAttackTimeout(_shotCooldown);
             }
         }
     }

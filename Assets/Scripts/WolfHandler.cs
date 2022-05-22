@@ -37,6 +37,8 @@ public class WolfHandler : MonoBehaviourPun
     private bool _isDead;
     private bool _canShift = true;
 
+    private Coroutine _wolfTimeoutCoroutine;
+
     private void Awake()
     {
         _photonView = PhotonView.Get(this);
@@ -94,12 +96,17 @@ public class WolfHandler : MonoBehaviourPun
         
         _player.MoveSpeed = _isWolf ? _wolfSpeed : _sheepSpeed;
 
-        StopCoroutine(WolfTimeout());
-        
+        if (_wolfTimeoutCoroutine != null)
+        {
+            StopCoroutine(_wolfTimeoutCoroutine);
+            UITimer.Instance.StopWolfTimeout();
+            _wolfTimeoutCoroutine = null;
+        }
+
         if (_isWolf)
         {
             UITimer.Instance.StartWolfTimeout(_wolfTimeout);
-            StartCoroutine(WolfTimeout());
+            _wolfTimeoutCoroutine = StartCoroutine(WolfTimeout());
         }
         else
         {
@@ -177,6 +184,7 @@ public class WolfHandler : MonoBehaviourPun
         //_photonView.RPC(nameof(CmdAttack), RpcTarget.MasterClient, PhotonView.Get(closestSheep).ViewID);
 
         StartCoroutine(StartAttackCooldown());
+        UITimer.Instance.StartWolfAttackTimeout(_attackCooldown);
     }
 
     private void HandleSheepAttack(GameObject sheep)

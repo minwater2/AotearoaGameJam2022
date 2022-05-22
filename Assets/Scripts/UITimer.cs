@@ -1,21 +1,20 @@
-using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UITimer : MonoBehaviour
 {
-    [SerializeField] private Canvas _canvas;
-    [SerializeField] private Image _icon;
-    [SerializeField] private TextMeshProUGUI _title;
-    [SerializeField] private TextMeshProUGUI _timer;
-
-    [SerializeField] private Sprite _transitionIcon;
-    [SerializeField] private Sprite _wolfTimeoutIcon;
+    [SerializeField] private GameObject _transitionGO;
+    [SerializeField] private GameObject _wolfAttackGO;
+    [SerializeField] private GameObject _shepardAttackGO;
+    [SerializeField] private GameObject _wolfTimeoutGO;
     
-    [SerializeField] private string _transitionTitle;
-    [SerializeField] private string _wolfTimeoutTitle;
+    [SerializeField] private Image _transitionIcon;
+    [SerializeField] private Image _wolfAttackIcon;
+    [SerializeField] private Image _shepardAttackIcon;
+    [SerializeField] private Image _wolfTimeoutIcon;
+
+    private Coroutine _timeoutCoroutine;
 
     public static UITimer Instance;
     
@@ -26,34 +25,55 @@ public class UITimer : MonoBehaviour
         Instance = this;
     }
 
+    public void Init(bool isWolf)
+    {
+        if (isWolf)
+        {
+            _transitionGO.SetActive(true);
+            _wolfAttackGO.SetActive(true);
+            _wolfTimeoutGO.SetActive(true);
+        }
+        else
+        {
+            _shepardAttackGO.SetActive(true);
+        }
+    }
+
     public void StartTransitionCooldown(float time)
     {
-        StopAllCoroutines();
-        StartCoroutine(StartTimer(time, _transitionTitle, _transitionIcon));
+        StartCoroutine(StartTimer(time, _transitionIcon));
     }
 
     public void StartWolfTimeout(float time)
     {
-        StopAllCoroutines();
-        StartCoroutine(StartTimer(time, _wolfTimeoutTitle, _wolfTimeoutIcon));
+        _timeoutCoroutine = StartCoroutine(StartTimer(time, _wolfTimeoutIcon));
     }
 
-    private IEnumerator StartTimer(float time, string title, Sprite icon)
+    public void StopWolfTimeout()
     {
-        _canvas.enabled = true;
-        _icon.sprite = icon;
-        _title.text = title;
-        _timer.text = Mathf.RoundToInt(time).ToString();
+        StopCoroutine(_timeoutCoroutine);
+        _wolfTimeoutIcon.fillAmount = 1f;
+    }
 
-        float timeLeft = time;
+    public void StartWolfAttackTimeout(float time)
+    {
+        StartCoroutine(StartTimer(time, _wolfAttackIcon));
+    }
+
+    public void StartShepardAttackTimeout(float time)
+    {
+        StartCoroutine(StartTimer(time, _shepardAttackIcon));
+    }
+
+    private IEnumerator StartTimer(float totalTime, Image icon)
+    {
+        float timeLeft = totalTime;
 
         while (timeLeft > 0)
         {
             yield return new WaitForEndOfFrame();
             timeLeft -= Time.deltaTime;
-            _timer.text = Mathf.RoundToInt(timeLeft).ToString();
+            icon.fillAmount = (totalTime - timeLeft) / totalTime;
         }
-
-        _canvas.enabled = false;
     }
 }

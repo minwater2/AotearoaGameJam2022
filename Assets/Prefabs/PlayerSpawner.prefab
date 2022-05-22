@@ -151,14 +151,14 @@ MonoBehaviour:
   _shepherdSpawn: {fileID: 1836139553}
   _wolvesSpawnPoints:
   - {fileID: 3636434916749770170}
+  - {fileID: 3636434916749770170}
+  - {fileID: 7309466634787549911}
   - {fileID: 3636434917617524526}
+  - {fileID: 266212844730322880}
   - {fileID: 3636434916319891158}
+  - {fileID: 7082850973196347112}
   - {fileID: 3636434917717729365}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7663948755759540684}
   _cameraPrefab: {fileID: 8211674627253461942, guid: dea99bccce9d1c0408cfdcd99e5b01cb, type: 3}
   _shepherdCamFollowOffset: {x: 0, y: 12.5, z: -12.5}
   _wolfCamFollowOffset: {x: 0, y: 20, z: -20}

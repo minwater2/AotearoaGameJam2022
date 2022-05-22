@@ -3,7 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private Animator _animator2;
@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _isWolf = TryGetComponent<WolfHandler>(out _);
 
+        if (photonView.AmOwner)
+        {
+            UITimer.Instance.Init(_isWolf);
+        }
+        
         if (!PhotonNetwork.IsMasterClient) return;
         if (!_isWolf) FlockHandler.ShepardsToAvoid.Add(transform);
     }
