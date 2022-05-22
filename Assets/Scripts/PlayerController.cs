@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _animator2;
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
 
@@ -52,6 +53,9 @@ public class PlayerController : MonoBehaviour
         {
             if(_animator)
                 _animator.SetFloat("MoveSpeed", 0f);
+            
+            if(_animator2)
+                _animator2.SetFloat("MoveSpeed", 0f);
             return;
         }
 
@@ -61,6 +65,10 @@ public class PlayerController : MonoBehaviour
 
         if(_animator)
             _animator.SetFloat("MoveSpeed", _velocity.magnitude);
+        
+        if(_animator2)
+            _animator2.SetFloat("MoveSpeed", _velocity.magnitude);
+        
         _rigidbody.MovePosition(transform.position + deltaPosition * Time.deltaTime);
     }
 }

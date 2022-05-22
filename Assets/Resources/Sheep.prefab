@@ -204,10 +204,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.32
-  m_Height: 1
+  m_Radius: 0.7
+  m_Height: 1.6
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!114 &4730659517339292855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +246,18 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
       propertyPath: m_LocalPosition.x
@@ -287,6 +299,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2514221609469522735, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 70268ac3fadbdf84fb973b0a7268dbd7, type: 2}
+    - target: {fileID: -2514221609469522735, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 8748892135801146194, guid: f712c77809a8eff49bf5eda242bda3c5, type: 3}
     - target: {fileID: 919132149155446097, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
       propertyPath: m_Name
       value: SHP_baseRig_001

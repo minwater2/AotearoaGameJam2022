@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1051688565027226786}
+  _animator2: {fileID: 0}
   DisableMovement: 0
   _runningParticles:
   - {fileID: 3743364593218976253}
@@ -437,6 +438,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.02078798
       objectReference: {fileID: 0}
+    - target: {fileID: 2548784191092085369, guid: 209e9173d5f8c174d9bf7e5f8a103180, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2548784191092085369, guid: 209e9173d5f8c174d9bf7e5f8a103180, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1fbc856ddbc9bc245bba55eadfb97339, type: 2}
+    - target: {fileID: 2548784191092085369, guid: 209e9173d5f8c174d9bf7e5f8a103180, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1fbc856ddbc9bc245bba55eadfb97339, type: 2}
+    - target: {fileID: 2548784191092085369, guid: 209e9173d5f8c174d9bf7e5f8a103180, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1fbc856ddbc9bc245bba55eadfb97339, type: 2}
+    - target: {fileID: 2548784191092085369, guid: 209e9173d5f8c174d9bf7e5f8a103180, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1fbc856ddbc9bc245bba55eadfb97339, type: 2}
     - target: {fileID: 5047439443287224557, guid: 209e9173d5f8c174d9bf7e5f8a103180, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 45.197582

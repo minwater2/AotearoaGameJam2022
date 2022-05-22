@@ -22,7 +22,8 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] GameObject _particles;
     [SerializeField] private float _wolfSpeed = 10f;
     [SerializeField] private NamePlate _namePlate;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _wolfAnimator;
+    [SerializeField] private Animator _sheepAnimator;
 
     private PhotonView _photonView;
     private DamageHandler _damageHandler;
@@ -155,8 +156,8 @@ public class WolfHandler : MonoBehaviourPun
         if (!_isWolf) return;
         if (_onCooldown) return;
         
-        if(_animator)
-            _animator.SetTrigger("Attack");
+        if(_wolfAnimator)
+            _wolfAnimator.SetTrigger("Attack");
         
         var results = Physics.OverlapSphere(transform.position, _distanceToKill, _sheepLayer);
         
