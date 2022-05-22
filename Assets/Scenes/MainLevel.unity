@@ -8759,57 +8759,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4758319906098400, guid: 774bd4c582a137c40a49a7931be665ce, type: 3}
   m_PrefabInstance: {fileID: 851941242}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &853258386
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 853258388}
-  - component: {fileID: 853258387}
-  m_Layer: 0
-  m_Name: AudioHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &853258387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 853258386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feca85885165a8747a503ae0edeca608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainSceneMusic: {fileID: 8300000, guid: e67fdf92861cf51448dd6105996ddd38, type: 3}
-  _sheepDeath: {fileID: 8300000, guid: ac6034ade498bb94b87620cdf6eac48b, type: 3}
-  _baaaaah: {fileID: 8300000, guid: 18815b3055ac7864c8f1141a069339c2, type: 3}
-  _shotgunShot: {fileID: 8300000, guid: a764377339b869e459f5e53fb9258f73, type: 3}
-  _shapeShift: {fileID: 8300000, guid: cc6699269b4c1d44ea1e860518b9bb73, type: 3}
-  _wolfDed: {fileID: 8300000, guid: 1ec22907c29279e42938b182c4ae0664, type: 3}
-  _buttonClicks: {fileID: 8300000, guid: dcf90ecc876946e4aa1bdf1116eac711, type: 3}
---- !u!4 &853258388
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 853258386}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &859627453
 PrefabInstance:
   m_ObjectHideFlags: 0

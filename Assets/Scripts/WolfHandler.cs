@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Linq;
 using Photon.Pun;
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(DamageHandler))]
@@ -26,6 +24,7 @@ public class WolfHandler : MonoBehaviourPun
     [SerializeField] private Animator _sheepAnimator;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _wolfAttack;
+    [SerializeField] private AudioClip _wolfDed;
 
 
     private PhotonView _photonView;
@@ -79,6 +78,8 @@ public class WolfHandler : MonoBehaviourPun
         _isDead = true;
         gameObject.layer = LayerMask.NameToLayer("WolfDead");
         _player.MoveSpeed = _wolfSpeed;
+        
+        _audioSource.PlayOneShot(_wolfDed);
         
         if (PhotonNetwork.IsMasterClient)
             WinConditions.Instance.SetWolfKill();
@@ -183,7 +184,7 @@ public class WolfHandler : MonoBehaviourPun
         if (!_isWolf) return;
         if (_onCooldown) return;
         
-        photonView.RPC(nameof(CmdTriggerWolfAttack), RpcTarget.All);
+        photonView.RPC(nameof(RpcTriggerWolfAttack), RpcTarget.All);
         
         var results = Physics.OverlapSphere(transform.position, _distanceToKill, _sheepLayer);
         
@@ -244,8 +245,10 @@ public class WolfHandler : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void CmdTriggerWolfAttack()
+    private void RpcTriggerWolfAttack()
     {
+        _audioSource.PlayOneShot(_wolfAttack);
+        
         if(_wolfAnimator)
             _wolfAnimator.SetTrigger("Attack");
     }

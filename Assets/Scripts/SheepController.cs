@@ -25,6 +25,8 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private Animator _animator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     [SerializeField] private GameObject _deathPuff;
+    [SerializeField] private AudioClip[] _dedSheep;
+    [SerializeField] private AudioSource _audioSource;
     
     private Rigidbody _rigidbody;
     private Collider _collider;
@@ -52,6 +54,9 @@ public class SheepController : MonoBehaviourPun
         _rigidbody.isKinematic = true;
         enabled = false;
 
+        _audioSource.PlayOneShot(_dedSheep[Random.Range(0, _dedSheep.Length)]);
+        Destroy(GetComponent<BaaaaAudioHandler>());
+        
         if (!PhotonNetwork.IsMasterClient) return;
         
         FlockHandler.Sheepsss.Remove(transform);
