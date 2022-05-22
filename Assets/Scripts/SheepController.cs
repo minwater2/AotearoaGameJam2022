@@ -23,10 +23,10 @@ public class SheepController : MonoBehaviourPun
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _heightOffset = 1f;
     [SerializeField] private Animator _animator;
+    [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     
     private Rigidbody _rigidbody;
     private Collider _collider;
-    private MeshRenderer _meshRenderer;
     private DamageHandler _damageHandler;
     
     private bool _grazing;
@@ -36,7 +36,6 @@ public class SheepController : MonoBehaviourPun
         _rigidbody = GetComponent<Rigidbody>();
         _damageHandler = GetComponent<DamageHandler>();
         _collider = GetComponent<Collider>();
-        _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _damageHandler.OnDeath += OnDeath;
     }
 
@@ -170,20 +169,28 @@ public class SheepController : MonoBehaviourPun
         }
         
         _rigidbody.velocity = transform.forward * speed;
-        
-        if(_animator)
-            _animator.SetFloat("MoveSpeed", _rigidbody.velocity.magnitude);
     }
 
     private IEnumerator Grazing()
     {
         _grazing = true;
         _rigidbody.isKinematic = true;
+        _rigidbody.velocity = Vector3.zero;
+        
+        var randomState = Random.Range(0, 1f) >= 0.5f ? "Grazing" : "Idling"; 
+        
+        if (_animator)
+        {
+            _animator.SetBool(randomState , true);
+        }
+        
         yield return new WaitForSeconds(_grazeTime);
         _grazing = false;
         _rigidbody.isKinematic = false;
-        
-        if(_animator)
-            _animator.SetFloat("MoveSpeed", 0f);
+
+        if (_animator)
+        {
+            _animator.SetBool(randomState, false);
+        }
     }
 }
