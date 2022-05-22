@@ -7,7 +7,6 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private TrailRenderer _bulletTrail;
     [SerializeField] private float _bulletTrailTravelTime;
     [SerializeField] private Transform _muzzle;
-    [SerializeField] private float _shotCooldown;
     [SerializeField] private int _magSize = 5;
     [SerializeField] private float _horizontalBulletSpread = 5f;
     [SerializeField] private float _verticalBulletSpread = 5f;
@@ -16,15 +15,8 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private float _maxBulletTravelDistance;
     [SerializeField] private LayerMask _interactionLayer;
 
-    public bool CanShoot => _canShoot;
-    private bool _canShoot = true;
-    
     public void Shoot()
     {
-        if (!_canShoot) return;
-
-        StartCoroutine(ProcessCooldown());
-
         for (int i = 0; i < _numberOfBullets; i++)
         {
             var direction = Quaternion.Euler(
@@ -66,14 +58,6 @@ public class Shotgun : MonoBehaviour
         }
     }
 
-    private IEnumerator ProcessCooldown()
-    {
-        _canShoot = false;
-
-        yield return new WaitForSeconds(_shotCooldown);
-        
-        _canShoot = true;
-    }
 
     private IEnumerator ProcessBulletTrail(TrailRenderer trail, Vector3 goalPoint)
     {
