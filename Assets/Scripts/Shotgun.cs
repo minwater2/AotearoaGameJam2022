@@ -17,6 +17,10 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private GameObject BulletParticles;
     public void Shoot()
     {
+        Instantiate(BulletParticles, _muzzle.position, Quaternion.identity);
+        
+        if (!PhotonNetwork.IsMasterClient) return;
+        
         for (int i = 0; i < _numberOfBullets; i++)
         {
             var direction = Quaternion.Euler(
@@ -32,15 +36,12 @@ public class Shotgun : MonoBehaviour
             {
                 // show bullet trace
                 var bulletTrail = PhotonNetwork.Instantiate(_bulletTrail.name, _muzzle.position, Quaternion.identity);
-                PhotonNetwork.Instantiate(BulletParticles.name, _muzzle.position, Quaternion.identity);
                 var trail = bulletTrail.GetComponent<TrailRenderer>();
                 trail.time = _bulletTrailTravelTime;
                 
                 var pos = _muzzle.position + direction * _maxBulletTravelDistance;
                 StartCoroutine(ProcessBulletTrail(trail, pos));
             }
-            
-            
         }
     }
 
@@ -74,7 +75,10 @@ public class Shotgun : MonoBehaviour
         }
 
         trail.transform.position = goalPoint;
+        
         // spawn impact here
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Destroy(trail.gameObject);
     }
 
 }
