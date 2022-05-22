@@ -51,6 +51,7 @@ public class WinConditions : MonoBehaviourPun
         
         if (timeLeft > 0) timeLeft -= Time.deltaTime;
         photonView.RPC(nameof(RpcTime), RpcTarget.All, timeLeft);
+
     }
 
     private void UpdateTimer(float currentTime)
