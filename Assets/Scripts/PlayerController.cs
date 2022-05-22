@@ -32,23 +32,17 @@ public class PlayerController : MonoBehaviourPun
     {
         _velocity = velocity;
 
-        // if (_velocity.magnitude <= 0)
-        // {
-        //     photonView.RPC(nameof(ParticleChange), RpcTarget.All,false);
-        // }
-        //
-        // if (_velocity.magnitude > 0)
-        // {
-        //     photonView.RPC(nameof(ParticleChange), RpcTarget.All,true);
-        // }
+         if (_velocity.magnitude <= 0)
+         {
+             _runningParticles[0].gameObject.GetComponent<ParticleSystem>().enableEmission = true;
+         }
+        
+        if (_velocity.magnitude > 0)
+        {
+            _runningParticles[0].gameObject.GetComponent<ParticleSystem>().enableEmission = false;
+        }
     }
 
-    [PunRPC]
-    private void ParticleChange(bool particlesOn)
-    {
-        _runningParticles[0].gameObject.GetComponent<ParticleSystem>().enableEmission = particlesOn;
-    }
-    
     public void LookAt(Vector3 point)
     {
         var correctHeightPoint = new Vector3(point.x, transform.position.y, point.z);

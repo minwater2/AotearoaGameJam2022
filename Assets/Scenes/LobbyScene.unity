@@ -18233,10 +18233,10 @@ RectTransform:
   m_Father: {fileID: 130813924}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5, y: 252.8362}
-  m_SizeDelta: {x: 849.1378, y: 212.2844}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 300}
+  m_SizeDelta: {x: 0, y: 212.2844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1812549602
 MonoBehaviour:
@@ -18258,7 +18258,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TITLE
+  m_text: sheep sheep wolf
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8928352a8f3275941a81b7eb8f369a81, type: 2}
   m_sharedMaterial: {fileID: -1664859453832185242, guid: 8928352a8f3275941a81b7eb8f369a81, type: 2}
@@ -18285,8 +18285,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 194.11
-  m_fontSizeBase: 194.11
+  m_fontSize: 160
+  m_fontSizeBase: 160
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
