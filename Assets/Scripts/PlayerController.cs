@@ -36,7 +36,8 @@ public class PlayerController : MonoBehaviour
     {
         if (DisableMovement)
         {
-            _animator.SetFloat("MoveSpeed", 0f);
+            if(_animator)
+                _animator.SetFloat("MoveSpeed", 0f);
             return;
         }
 
@@ -44,7 +45,8 @@ public class PlayerController : MonoBehaviour
         if (_isWolf) deltaPosition = _velocity.z * transform.forward;
         else deltaPosition = _velocity;
 
-        _animator.SetFloat("MoveSpeed", _velocity.magnitude);
+        if(_animator)
+            _animator.SetFloat("MoveSpeed", _velocity.magnitude);
         _rigidbody.MovePosition(transform.position + deltaPosition * Time.deltaTime);
     }
 }
