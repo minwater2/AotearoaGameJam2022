@@ -80,7 +80,7 @@ public class WolfHandler : MonoBehaviourPun
         gameObject.layer = LayerMask.NameToLayer("WolfDead");
         _player.MoveSpeed = _wolfSpeed;
         
-        _audioSource.PlayOneShot(_wolfDed[Random.Range(0, _wolfDed.Length)]);
+        _audioSource.PlayOneShot(_wolfDed[Random.Range(0, _wolfDed.Length)], 2f);
         
         if (PhotonNetwork.IsMasterClient)
             WinConditions.Instance.SetWolfKill();
@@ -249,7 +249,7 @@ public class WolfHandler : MonoBehaviourPun
     [PunRPC]
     private void RpcTriggerWolfAttack()
     {
-        _audioSource.PlayOneShot(_wolfAttack[Random.Range(0, _wolfAttack.Length)], 0.5f);
+        _audioSource.PlayOneShot(_wolfAttack[Random.Range(0, _wolfAttack.Length)], 0.2f);
         
         if(_wolfAnimator)
             _wolfAnimator.SetTrigger("Attack");
