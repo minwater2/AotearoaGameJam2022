@@ -48,4 +48,12 @@ public class EndScreenUI : MonoBehaviourPun
         FlockHandler.ShepardsToAvoid.Clear();
         PhotonNetwork.LoadLevel("LobbyScene");
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            RematchButton();
+        }
+    }
 }
