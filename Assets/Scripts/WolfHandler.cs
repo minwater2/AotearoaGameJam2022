@@ -178,6 +178,12 @@ public class WolfHandler : MonoBehaviourPun
         yield return new WaitForSeconds(_effectsTiming);
         _wolfModel.SetActive(isWolf);
         _sheepModel.SetActive(!isWolf);
+        
+        if (_isDead)
+        {
+            _wolfModel.SetActive(false);
+            _wolfModel.SetActive(false);
+        }
     }
 
     private void Attack()
