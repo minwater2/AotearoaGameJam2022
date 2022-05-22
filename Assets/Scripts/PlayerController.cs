@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
 
@@ -33,12 +34,19 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (DisableMovement) return;
-        
+        if (DisableMovement)
+        {
+            if(_animator)
+                _animator.SetFloat("MoveSpeed", 0f);
+            return;
+        }
+
         Vector3 deltaPosition;
         if (_isWolf) deltaPosition = _velocity.z * transform.forward;
         else deltaPosition = _velocity;
 
+        if(_animator)
+            _animator.SetFloat("MoveSpeed", _velocity.magnitude);
         _rigidbody.MovePosition(transform.position + deltaPosition * Time.deltaTime);
     }
 }
