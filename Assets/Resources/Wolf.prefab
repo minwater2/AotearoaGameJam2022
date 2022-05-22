@@ -398,7 +398,7 @@ MonoBehaviour:
   _attackCooldown: 2
   _effectsTiming: 0.2
   _stunTiming: 0.3
-  _wolfTimeout: 10
+  _wolfTimeout: 5
   _shiftCooldown: 5
   _particles: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   _wolfSpeed: 10
