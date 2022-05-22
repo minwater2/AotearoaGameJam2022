@@ -327,6 +327,35 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
   m_PrefabInstance: {fileID: 42800050341395113}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &889856452644734968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
+  m_PrefabInstance: {fileID: 42800050341395113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5585682834489941920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889856452644734968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: Grazing
+  - Type: 4
+    SynchronizeType: 1
+    Name: Idling
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!95 &5904953322170156856 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 23a921cfaa4bf8e4882201708113de52, type: 3}
