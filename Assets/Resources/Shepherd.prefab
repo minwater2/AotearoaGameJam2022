@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shotgun: {fileID: 6352493705642202473}
+  _shotCooldown: 1.25
   _animator: {fileID: 1051688565027226786}
 --- !u!114 &6352493705642202473
 MonoBehaviour:
@@ -151,7 +152,6 @@ MonoBehaviour:
   _bulletTrail: {fileID: 2208916518871876981, guid: b14ee485fd0ad2347a1b7cdab4e39d35, type: 3}
   _bulletTrailTravelTime: 0.2
   _muzzle: {fileID: 82790444693670990}
-  _shotCooldown: 1.25
   _magSize: 5
   _horizontalBulletSpread: 15
   _verticalBulletSpread: 25
