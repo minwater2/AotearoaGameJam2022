@@ -18,6 +18,6 @@ public class ButtonClickSound : MonoBehaviour
 
     private void PlayButtonClick()
     {
-        _audioSource.PlayOneShot(_buttonClick, 0.5f);
+        _audioSource.PlayOneShot(_buttonClick, 0.25f);
     }
 }
