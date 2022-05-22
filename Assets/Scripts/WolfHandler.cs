@@ -39,8 +39,10 @@ public class WolfHandler : MonoBehaviourPun
     private bool _onCooldown;
     private bool _isDead;
     private bool _canShift = true;
+    private bool _isGrazing;
 
     private Coroutine _wolfTimeoutCoroutine;
+    private Coroutine _grazeCoroutine;
 
     private void Awake()
     {
@@ -87,14 +89,20 @@ public class WolfHandler : MonoBehaviourPun
         if (!_photonView.IsMine) return;
         
         if (Input.GetKeyDown(KeyCode.Space)) ShapeShift();
-        else if (Input.GetMouseButtonDown(0)) Attack();
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if(_isWolf)
+                Attack();
+            else
+                Graze();
+        }
     }
     
     private void ShapeShift()
     {
         if (_isDead) return;
         if (!_canShift) return;
-        
+
         _isWolf = !_isWolf;
         
         _player.MoveSpeed = _isWolf ? _wolfSpeed : _sheepSpeed;
@@ -104,6 +112,15 @@ public class WolfHandler : MonoBehaviourPun
             StopCoroutine(_wolfTimeoutCoroutine);
             UITimer.Instance.StopWolfTimeout();
             _wolfTimeoutCoroutine = null;
+        }
+
+        if (_grazeCoroutine != null)
+        {
+            StopCoroutine(_grazeCoroutine);
+            _isGrazing = false;
+            _player.PlayerController.DisableMovement = false;
+            _grazeCoroutine = null;
+            _sheepAnimator.SetBool("Graze", false);
         }
 
         if (_isWolf)
@@ -196,15 +213,14 @@ public class WolfHandler : MonoBehaviourPun
             damageHandler.ProcessDamage();
     }
 
-    [PunRPC]
-    private void CmdHandleWolfDeath(int viewId)
+    private void Graze()
     {
-        if (viewId == photonView.ViewID)
-        {
-            _wolfModel.SetActive(false);
-            _sheepModel.SetActive(false);
-            _isDead = true;
-        }
+        if (_isGrazing) return;
+        
+        if(_grazeCoroutine != null)
+            StopCoroutine(_grazeCoroutine);
+        
+        _grazeCoroutine = StartCoroutine(ProcessGraze());
     }
     
     private IEnumerator StartAttackCooldown()
@@ -212,5 +228,19 @@ public class WolfHandler : MonoBehaviourPun
         _onCooldown = true;
         yield return new WaitForSeconds(_attackCooldown);
         _onCooldown = false;
+    }
+    
+    private IEnumerator ProcessGraze()
+    {
+        _isGrazing = true;
+        _player.PlayerController.DisableMovement = true;
+        _sheepAnimator.SetBool("Graze", true);
+        
+        yield return new WaitForSeconds(3f);
+        
+        _isGrazing = false;
+        _player.PlayerController.DisableMovement = false;
+        _grazeCoroutine = null;
+        _sheepAnimator.SetBool("Graze", false);
     }
 }
