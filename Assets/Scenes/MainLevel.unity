@@ -21011,10 +21011,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 905726218575125931, guid: 02785475de421c145b5f1955e306b386, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 905726218575125934, guid: 02785475de421c145b5f1955e306b386, type: 3}
       propertyPath: m_Name
       value: UITimers

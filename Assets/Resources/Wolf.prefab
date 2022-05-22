@@ -456,6 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0270c4f0ab2b4e1e8bd0a39555217501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
   DisableMovement: 0
 --- !u!114 &5552790733023124590
 MonoBehaviour:
