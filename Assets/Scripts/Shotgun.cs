@@ -14,7 +14,7 @@ public class Shotgun : MonoBehaviour
 
     [SerializeField] private float _maxBulletTravelDistance;
     [SerializeField] private LayerMask _interactionLayer;
-
+    [SerializeField] private GameObject BulletParticles;
     public void Shoot()
     {
         for (int i = 0; i < _numberOfBullets; i++)
@@ -32,6 +32,7 @@ public class Shotgun : MonoBehaviour
             {
                 // show bullet trace
                 var bulletTrail = PhotonNetwork.Instantiate(_bulletTrail.name, _muzzle.position, Quaternion.identity);
+                PhotonNetwork.Instantiate(BulletParticles.name, _muzzle.position, Quaternion.identity);
                 var trail = bulletTrail.GetComponent<TrailRenderer>();
                 trail.time = _bulletTrailTravelTime;
                 
