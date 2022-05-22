@@ -32,15 +32,15 @@ public class PlayerController : MonoBehaviourPun
     {
         _velocity = velocity;
 
-        if (_velocity.magnitude <= 0)
-        {
-            photonView.RPC(nameof(ParticleChange), RpcTarget.All,false);
-        }
-        
-        if (_velocity.magnitude > 0)
-        {
-            photonView.RPC(nameof(ParticleChange), RpcTarget.All,true);
-        }
+        // if (_velocity.magnitude <= 0)
+        // {
+        //     photonView.RPC(nameof(ParticleChange), RpcTarget.All,false);
+        // }
+        //
+        // if (_velocity.magnitude > 0)
+        // {
+        //     photonView.RPC(nameof(ParticleChange), RpcTarget.All,true);
+        // }
     }
 
     [PunRPC]
